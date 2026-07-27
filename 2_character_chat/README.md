@@ -18,9 +18,9 @@
 성비는 여자 2명(우태은·유화선) : 남자 1명(김혁인) = **2:1**로 구성했습니다.
 각 캐릭터의 정면/오른쪽/왼쪽/뒷모습 캐릭터 시트는 `characters/` 폴더를 참고하세요.
 
-- `characters/우태은씨.png`
-- `characters/김혁인씨.png`
-- `characters/유화선씨.png`
+![우태은씨 캐릭터 시트](characters/우태은씨.png)
+![김혁인씨 캐릭터 시트](characters/김혁인씨.png)
+![유화선씨 캐릭터 시트](characters/유화선씨.png)
 
 상세 페르소나 설명(Nemotron 데이터셋 원문 기반)은 `personas/01_우태은.md`, `02_김혁인.md`,
 `03_유화선.md`를 참고하세요.
