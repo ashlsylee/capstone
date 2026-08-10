@@ -139,3 +139,5 @@ persona 필드)에 근거해 CSS로 재구성했습니다.
 
 로컬에서 `himart_stage.html`을 브라우저로 더블클릭해서 열면 바로 동작합니다. 별도 서버나 설치가
 필요 없습니다.
+링크를 추가하였습니다. 
+> https://ashlsylee.github.io/capstone/3_web_visualization/lotte_himart_visualization.html
