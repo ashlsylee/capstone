@@ -1,0 +1,164 @@
+<title>동대문 방문 시뮬레이션 검증</title>
+<style>
+  :root {
+    --surface-1: #fcfcfb;
+    --surface-2: #f9f9f7;
+    --text-primary: #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted: #898781;
+    --border: rgba(11,11,11,0.10);
+    --grid: #e1e0d9;
+    --real: #2a78d6;
+    --sim: #eb6834;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --surface-1: #1a1a19;
+      --surface-2: #0d0d0d;
+      --text-primary: #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted: #898781;
+      --border: rgba(255,255,255,0.10);
+      --grid: #2c2c2a;
+      --real: #3987e5;
+      --sim: #d95926;
+    }
+  }
+  :root[data-theme="dark"] {
+    --surface-1: #1a1a19;
+    --surface-2: #0d0d0d;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --border: rgba(255,255,255,0.10);
+    --grid: #2c2c2a;
+    --real: #3987e5;
+    --sim: #d95926;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background: var(--surface-2); color: var(--text-primary); font-family: system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .page { max-width: 980px; margin: 0 auto; padding: 32px 20px 48px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--text-secondary); font-size: 13px; margin: 0 0 20px; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit,minmax(130px,1fr)); gap: 10px; margin-bottom: 24px; }
+  .stat { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .stat .v { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+  .card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 18px; }
+  .card h2 { font-size: 14px; margin: 0 0 4px; }
+  .card .mae { font-size: 11px; color: var(--text-muted); margin: 0 0 14px; }
+
+  .legend { display:flex; gap:14px; font-size:11px; color:var(--text-secondary); margin-bottom:10px; }
+  .legend span { display:inline-flex; align-items:center; gap:5px; }
+  .legend i { width:9px; height:9px; border-radius:2px; display:inline-block; }
+
+  .chart { display: flex; align-items: flex-end; gap: 18px; height: 160px; border-bottom: 1px solid var(--grid); padding-bottom: 0; }
+  .group { display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; }
+  .bars { display:flex; gap:3px; align-items:flex-end; height:100%; }
+  .bar { width: 16px; border-radius: 3px 3px 0 0; position:relative; }
+  .bar.real { background: var(--real); }
+  .bar.sim { background: var(--sim); }
+  .bar .val { position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:9px; color:var(--text-muted); white-space:nowrap; font-variant-numeric: tabular-nums; }
+  .glabel { font-size: 11px; color: var(--text-secondary); margin-top: 8px; text-align:center; }
+  .gerr { font-size: 10px; color: var(--text-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  footer { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+</style>
+
+<div class="page">
+  <h1>동대문패션타운 관광특구 — 시뮬레이션 검증</h1>
+  <p class="sub">가상인간 841명(방문 응답) vs 실제 유동인구 비율(2026년 1분기) 비교 · gpt-5.4-mini, 25명 묶음 호출</p>
+
+  <div class="stats">
+    <div class="stat"><div class="v">3,054,932</div><div class="l">실제 총 유동인구</div></div>
+    <div class="stat"><div class="v">5,000</div><div class="l">질의한 에이전트 수</div></div>
+    <div class="stat"><div class="v">841</div><div class="l">채워진 방문자 수 (목표 1,000)</div></div>
+    <div class="stat"><div class="v">16.8%</div><div class="l">수락률</div></div>
+    <div class="stat"><div class="v">r = 0.72</div><div class="l">전체 상관계수</div></div>
+  </div>
+
+  <div class="card">
+    <h2>연령대</h2>
+    <p class="mae">MAE 5.4%p</p>
+    <div class="legend"><span><i style="background:var(--real)"></i>실제</span><span><i style="background:var(--sim)"></i>시뮬레이션</span></div>
+    <div class="chart" id="chart-age"></div>
+  </div>
+
+  <div class="card">
+    <h2>성별</h2>
+    <p class="mae">MAE 6.2%p</p>
+    <div class="legend"><span><i style="background:var(--real)"></i>실제</span><span><i style="background:var(--sim)"></i>시뮬레이션</span></div>
+    <div class="chart" id="chart-sex"></div>
+  </div>
+
+  <div class="card">
+    <h2>시간대</h2>
+    <p class="mae">MAE 14.2%p — 저녁(17-21시)에 과도하게 쏠리고 새벽·오전(00-11시)은 거의 반영 안 됨</p>
+    <div class="legend"><span><i style="background:var(--real)"></i>실제</span><span><i style="background:var(--sim)"></i>시뮬레이션</span></div>
+    <div class="chart" id="chart-time"></div>
+  </div>
+
+  <footer>
+    실제 값은 서울시 상권분석서비스 추정 유동인구(상권_코드 3001493, 2026년 1분기) 기준. 시뮬레이션은 nvidia/Nemotron-Personas-Korea 페르소나 풀에서
+    무작위로 5,000명을 뽑아 25명 단위로 방문 의향(Y/N)과 방문 시간대를 질의한 결과(안전 상한 도달로 목표 1,000명 채우기 전 종료).
+  </footer>
+</div>
+
+<script>
+  function renderGroup(container, label, real, sim, maxVal) {
+    const group = document.createElement('div');
+    group.className = 'group';
+    const bars = document.createElement('div');
+    bars.className = 'bars';
+
+    const rBar = document.createElement('div');
+    rBar.className = 'bar real';
+    rBar.style.height = (real / maxVal * 100) + '%';
+    rBar.innerHTML = `<span class="val">${real.toFixed(1)}</span>`;
+
+    const sBar = document.createElement('div');
+    sBar.className = 'bar sim';
+    sBar.style.height = (sim / maxVal * 100) + '%';
+    sBar.innerHTML = `<span class="val">${sim.toFixed(1)}</span>`;
+
+    bars.appendChild(rBar);
+    bars.appendChild(sBar);
+    group.appendChild(bars);
+
+    const glabel = document.createElement('div');
+    glabel.className = 'glabel';
+    glabel.textContent = label;
+    group.appendChild(glabel);
+
+    const gerr = document.createElement('div');
+    gerr.className = 'gerr';
+    gerr.textContent = Math.abs(real - sim).toFixed(1) + '%p차';
+    group.appendChild(gerr);
+
+    container.appendChild(group);
+  }
+
+  const age = [
+    ['10대', 5.6, 1.2], ['20대', 17.8, 29.6], ['30대', 21.2, 22.1],
+    ['40대', 20.7, 17.4], ['50대', 16.0, 19.4], ['60대+', 18.7, 10.3]
+  ];
+  const sex = [['남', 46.8, 53.0], ['여', 53.2, 47.0]];
+  const time = [
+    ['00-06', 17.0, 2.6], ['06-11', 19.5, 0.8], ['11-14', 16.2, 24.1],
+    ['14-17', 16.5, 18.9], ['17-21', 19.1, 51.5], ['21-24', 11.6, 2.0]
+  ];
+
+  const ageEl = document.getElementById('chart-age');
+  const ageMax = Math.max(...age.flatMap(d => [d[1], d[2]])) * 1.25;
+  age.forEach(([l, r, s]) => renderGroup(ageEl, l, r, s, ageMax));
+
+  const sexEl = document.getElementById('chart-sex');
+  const sexMax = Math.max(...sex.flatMap(d => [d[1], d[2]])) * 1.25;
+  sex.forEach(([l, r, s]) => renderGroup(sexEl, l, r, s, sexMax));
+
+  const timeEl = document.getElementById('chart-time');
+  const timeMax = Math.max(...time.flatMap(d => [d[1], d[2]])) * 1.2;
+  time.forEach(([l, r, s]) => renderGroup(timeEl, l, r, s, timeMax));
+</script>

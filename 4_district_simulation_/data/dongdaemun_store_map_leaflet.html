@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동대문패션타운 관광특구 — 실제 지도 매장 배치</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #f9f9f7;
+    color: #0b0b0b;
+  }
+  .page { max-width: 1080px; margin: 0 auto; padding: 24px 20px 40px; }
+  header h1 { font-size: 20px; margin: 0 0 4px; }
+  header p { margin: 0 0 16px; color: #52514e; font-size: 13px; }
+  #map {
+    width: 100%;
+    height: 620px;
+    border-radius: 12px;
+    border: 1px solid rgba(11,11,11,0.1);
+  }
+  .legend-box {
+    background: #fcfcfb;
+    padding: 10px 12px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    font-size: 12px;
+    line-height: 1.9;
+  }
+  .legend-box b { display: block; margin-bottom: 4px; font-size: 12px; }
+  .legend-swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  footer {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #898781;
+    line-height: 1.6;
+  }
+  .leaflet-popup-content { font-size: 13px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>동대문패션타운 관광특구 — 실제 지도 매장 배치</h1>
+    <p>Leaflet + OpenStreetMap · 상권_코드 3001493 · 굵은 핀 5개 = 대표 위치, 작은 점 = 업종별 점포 수만큼 무작위 밀도 표시</p>
+  </header>
+
+  <div id="map"></div>
+
+  <footer>
+    타일 지도: © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors ·
+    상권 중심(위도 37.5673 / 경도 127.0113), 경계 반경 약 439m는 서울시 상권분석서비스(영역-상권, 상권_코드 3001493) 면적 기준 산출.
+    대표 핀 5개의 좌표는 실제 건물 배치를 참고한 근사치이며, 점은 업종별 점포 수(마트 91·편의점 35·카페 106·호텔 30)만큼 경계 안에 무작위 배치한 밀도 표시로 개별 점포의 실제 주소가 아닙니다.
+  </footer>
+</div>
+
+<script>
+  var center = [37.5673, 127.0113];
+  var radiusM = 439;
+
+  var map = L.map('map', { scrollWheelZoom: true }).setView(center, 16);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.circle(center, {
+    radius: radiusM,
+    color: '#898781',
+    weight: 2,
+    dashArray: '6 6',
+    fill: false,
+    opacity: 0.6
+  }).addTo(map);
+
+  L.circleMarker(center, { radius: 4, color: '#52514e', fillColor: '#52514e', fillOpacity: 1 })
+    .addTo(map).bindTooltip('상권 중심', { permanent: false });
+
+  var colors = {
+    mart:  '#2a78d6',
+    cvs:   '#eb6834',
+    cafe:  '#1baf7a',
+    dept:  '#eda100',
+    hotel: '#e87ba4'
+  };
+
+  var stores = [
+    { name: '세븐일레븐', type: '편의점', brand: colors.cvs,  icon: '🏪', lat: 37.57047, lng: 127.01014, note: '두타몰 인근 · 편의점 35개 근거' },
+    { name: '엔제리너스', type: '카페',   brand: colors.cafe, icon: '☕', lat: 37.56822, lng: 127.01127, note: '헬로apM 인근 · 커피-음료 106개 근거' },
+    { name: '롯데백화점', type: '백화점', brand: colors.dept, icon: '🏬', lat: 37.56957, lng: 127.01071, note: '헬로apM·굿모닝시티(구 롯데피트인) · 던던 동대문점 실존' },
+    { name: '롯데마트',   type: '마트',   brand: colors.mart, icon: '🛒', lat: 37.56867, lng: 127.01467, note: '평화시장 인근 · 슈퍼마켓 91개 대체 라벨' },
+    { name: '롯데시티호텔', type: '호텔', brand: colors.hotel, icon: '🏨', lat: 37.56552, lng: 127.01410, note: '광희동 게스트하우스 밀집지 · 여관19+게스트하우스11 대체 라벨' }
+  ];
+
+  stores.forEach(function (s) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div style="background:' + s.brand + ';width:28px;height:28px;border-radius:50% 50% 50% 0;' +
+            'transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;' +
+            'border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.4);">' +
+            '<span style="transform:rotate(45deg);font-size:13px;">' + s.icon + '</span></div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 28]
+    });
+    L.marker([s.lat, s.lng], { icon: icon }).addTo(map)
+      .bindPopup('<b>' + s.name + '</b> (' + s.type + ')<br>' + s.note + '<br>' + s.lat + ', ' + s.lng);
+  });
+
+  // 업종별 밀도 점: 상권 경계 안에 실제 점포 수만큼 무작위 배치 (실제 주소 아님)
+  var densityCounts = [
+    { type: '마트',   color: colors.mart,  n: 91 },
+    { type: '편의점', color: colors.cvs,   n: 35 },
+    { type: '카페',   color: colors.cafe,  n: 106 },
+    { type: '호텔',   color: colors.hotel, n: 30 }
+  ];
+  var seed = 42;
+  function rand() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+  var latPerM = 1 / 111320;
+  var lngPerM = 1 / (111320 * Math.cos(center[0] * Math.PI / 180));
+
+  densityCounts.forEach(function (c) {
+    for (var i = 0; i < c.n; i++) {
+      var angle = rand() * Math.PI * 2;
+      var r = Math.sqrt(rand()) * (radiusM * 0.95);
+      var dLat = r * Math.sin(angle) * latPerM;
+      var dLng = r * Math.cos(angle) * lngPerM;
+      L.circleMarker([center[0] + dLat, center[1] + dLng], {
+        radius: 3,
+        color: c.color,
+        fillColor: c.color,
+        fillOpacity: 0.55,
+        weight: 0
+      }).addTo(map).bindTooltip(c.type, { direction: 'top' });
+    }
+  });
+
+  var legend = L.control({ position: 'bottomleft' });
+  legend.onAdd = function () {
+    var div = L.DomUtil.create('div', 'legend-box');
+    div.innerHTML =
+      '<b>매장 유형</b>' +
+      '<div><span class="legend-swatch" style="background:' + colors.mart + '"></span>롯데마트</div>' +
+      '<div><span class="legend-swatch" style="background:' + colors.cvs + '"></span>세븐일레븐</div>' +
+      '<div><span class="legend-swatch" style="background:' + colors.cafe + '"></span>엔제리너스</div>' +
+      '<div><span class="legend-swatch" style="background:' + colors.dept + '"></span>롯데백화점</div>' +
+      '<div><span class="legend-swatch" style="background:' + colors.hotel + '"></span>롯데시티호텔</div>';
+    return div;
+  };
+  legend.addTo(map);
+</script>
+</body>
+</html>
