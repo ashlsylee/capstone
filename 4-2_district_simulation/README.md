@@ -126,21 +126,8 @@ outputs/
 └── ablation_market_hours_results.csv         ← 대조실험 2 결과 (500명, 짝지은 비교)
 ```
 
-이 폴더 자체가 저장소 최상위(root)라고 가정한 구성이다. 두 차트(`simulation_validation_v2.html`,
-`simulation_market_hours.html`)는 GitHub Pages로 열면 렌더링된 그래프를 바로 볼 수 있다
-(레포에 push 후):
-
-```
-https://ashlsylee.github.io/4-2_district_simulation/simulation_validation_v2.html
-https://ashlsylee.github.io/4-2_district_simulation/simulation_market_hours.html
-```
-
-(레포 이름이 `4-2_district_simulation`이 아니라면 URL의 그 부분을 실제 레포 이름으로
-바꿔야 한다.)
-
-GitHub 저장소 화면에서 파일을 직접 클릭하면 소스 코드만 보이고 실행되지 않으므로, 반드시
-위 `ashlsylee.github.io` 도메인 URL로 접속해야 한다. push 직후 반영까지 1~2분 정도 걸릴 수
-있다.
+- [시뮬레이션 검증 차트 (v1·v2·대조실험 1)](https://ashlsylee.github.io/4-2_district_simulation/simulation_validation_v2.html)
+- [영업시간 정보 효과 차트 (대조실험 2)](https://ashlsylee.github.io/4-2_district_simulation/simulation_market_hours.html)
 
 ## 실행 방법
 
