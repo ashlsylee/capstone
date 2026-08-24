@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>동대문패션타운 관광특구 — 매장 유형별 지도 (일반형)</title>
+<style>
+  :root {
+    --surface-1:      #fcfcfb;
+    --surface-2:      #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --border:         rgba(11,11,11,0.10);
+    --grid-line:      #e1e0d9;
+
+    --c-mart:   #2a78d6; /* 마트 */
+    --c-cvs:    #eb6834; /* 편의점 */
+    --c-cafe:   #1baf7a; /* 카페 */
+    --c-dept:   #eda100; /* 백화점 */
+    --c-hotel:  #e87ba4; /* 호텔 */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface-1:      #1a1a19;
+      --surface-2:      #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --border:         rgba(255,255,255,0.10);
+      --grid-line:      #2c2c2a;
+
+      --c-mart:   #3987e5;
+      --c-cvs:    #d95926;
+      --c-cafe:   #199e70;
+      --c-dept:   #c98500;
+      --c-hotel:  #d55181;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 32px 20px 48px;
+  }
+  header h1 {
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  header p {
+    margin: 0 0 24px;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(240px, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .map-panel {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background-image:
+      repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 60px),
+      repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 60px);
+    background-position: center;
+  }
+
+  .boundary {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 79%; height: 79%;
+    transform: translate(-50%, -50%);
+    border: 2px dashed var(--text-muted);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .boundary-label {
+    position: absolute;
+    left: 50%; top: 10.5%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--surface-1);
+    padding: 1px 6px;
+    border-radius: 6px;
+  }
+
+  .center-dot {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 6px; height: 6px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .center-label {
+    position: absolute;
+    left: 50%; top: calc(50% + 8px);
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .compass {
+    position: absolute;
+    top: 12px; right: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .marker {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+  }
+  .marker-pin {
+    width: 30px; height: 30px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    border: 2px solid var(--surface-1);
+  }
+  .marker-pin span {
+    transform: rotate(45deg);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .marker-tag {
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+  .marker-sub {
+    font-size: 10px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .marker:hover .marker-detail { display: block; }
+  .marker-detail {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-primary);
+    color: var(--surface-1);
+    font-size: 11px;
+    line-height: 1.5;
+    padding: 8px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 5;
+  }
+  .marker { z-index: 2; }
+
+  .dot {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.55;
+    z-index: 1;
+  }
+
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .card h2 {
+    font-size: 13px;
+    margin: 0 0 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .legend-row:last-child { border-bottom: none; }
+  .legend-swatch {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    border: 2px solid var(--surface-1);
+    box-shadow: 0 0 0 1px var(--border);
+  }
+  .legend-text b { display: block; font-size: 13px; }
+  .legend-text span { display: block; font-size: 11px; color: var(--text-secondary); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  th, td {
+    text-align: left;
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  th { color: var(--text-muted); font-weight: 600; }
+  td:first-child, th:first-child { color: var(--text-primary); }
+
+  footer {
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>동대문패션타운 관광특구 — 매장 유형별 지도</h1>
+    <p>서울시 상권분석서비스(점포-상권) 기준 실존 5개 유형만 배치, 브랜드 라벨 없이 업종명만 표시 · 상권_코드 3001493</p>
+    <p>굵은 핀 5개 = 상권 대표 위치 · 작은 점 = 해당 업종의 상권 내 전체 점포 수만큼 경계 안에 무작위 배치</p>
+  </header>
+
+  <div class="layout">
+    <div class="map-panel" id="map">
+      <div class="boundary"></div>
+      <div class="boundary-label">상권 경계 (반경 약 439m)</div>
+      <div class="center-dot"></div>
+      <div class="center-label">상권 중심</div>
+      <div class="compass">N ↑</div>
+
+      <!-- markers positioned by real coordinate offset from 상권 중심 -->
+      <div class="marker" style="left:41%; top:18.5%;">
+        <div class="marker-detail">두타몰 인근 · 편의점 35개 근거<br>37.57047, 127.01014</div>
+        <div class="marker-pin" style="background:var(--c-cvs);"><span>🏪</span></div>
+        <div class="marker-tag">편의점</div>
+        <div class="marker-sub">35개 근거</div>
+      </div>
+
+      <div class="marker" style="left:50%; top:41%;">
+        <div class="marker-detail">헬로apM 인근 · 커피-음료 106개 근거<br>37.56822, 127.01127</div>
+        <div class="marker-pin" style="background:var(--c-cafe);"><span>☕</span></div>
+        <div class="marker-tag">카페</div>
+        <div class="marker-sub">커피-음료 106개 근거</div>
+      </div>
+
+      <div class="marker" style="left:45.5%; top:27.5%;">
+        <div class="marker-detail">헬로apM·굿모닝시티 · 던던 동대문점<br>37.56957, 127.01071</div>
+        <div class="marker-pin" style="background:var(--c-dept);"><span>🏬</span></div>
+        <div class="marker-tag">백화점</div>
+        <div class="marker-sub">던던 동대문점(실존)</div>
+      </div>
+
+      <div class="marker" style="left:77%; top:36.5%;">
+        <div class="marker-detail">평화시장 인근 · 슈퍼마켓 91개 근거<br>37.56867, 127.01467</div>
+        <div class="marker-pin" style="background:var(--c-mart);"><span>🛒</span></div>
+        <div class="marker-tag">마트</div>
+        <div class="marker-sub">슈퍼마켓 91개 근거</div>
+      </div>
+
+      <div class="marker" style="left:72.5%; top:68%;">
+        <div class="marker-detail">광희동 게스트하우스 밀집지 · 여관19+게스트하우스11 근거<br>37.56552, 127.01410</div>
+        <div class="marker-pin" style="background:var(--c-hotel);"><span>🏨</span></div>
+        <div class="marker-tag">호텔</div>
+        <div class="marker-sub">여관19+게스트하우스11 근거</div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h2>매장 유형</h2>
+        <div class="legend-row">
+          <div class="legend-swatch" style="background:var(--c-mart);">🛒</div>
+          <div class="legend-text"><b>마트</b><span>슈퍼마켓 91개 대체 라벨</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-swatch" style="background:var(--c-cvs);">🏪</div>
+          <div class="legend-text"><b>편의점</b><span>35개</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-swatch" style="background:var(--c-cafe);">☕</div>
+          <div class="legend-text"><b>카페</b><span>커피-음료 106개</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-swatch" style="background:var(--c-dept);">🏬</div>
+          <div class="legend-text"><b>백화점</b><span>던던 동대문점(실존)</span></div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-swatch" style="background:var(--c-hotel);">🏨</div>
+          <div class="legend-text"><b>호텔</b><span>여관19+게스트하우스11 대체 라벨</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>매장 상세</h2>
+        <table>
+          <thead><tr><th>위치</th><th>유형</th><th>위경도</th></tr></thead>
+          <tbody>
+            <tr><td>두타몰 인근</td><td>편의점</td><td>37.5705, 127.0101</td></tr>
+            <tr><td>헬로apM 인근</td><td>카페</td><td>37.5682, 127.0113</td></tr>
+            <tr><td>헬로apM·굿모닝시티</td><td>백화점</td><td>37.5696, 127.0107</td></tr>
+            <tr><td>평화시장 인근</td><td>마트</td><td>37.5687, 127.0147</td></tr>
+            <tr><td>광희동</td><td>호텔</td><td>37.5655, 127.0141</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    좌표는 상권 중심점(서울시 상권분석서비스 영역-상권, 위도 37.5673 / 경도 127.0113) 기준 실제 건물·구역 배치를 참고해 프로토타입용으로 산출한 근사치이며, 정밀 지오코딩 결과가 아닙니다.
+    매장 유형은 서울시 상권분석서비스(점포-상권, 상권_코드 3001493)에서 실제 존재가 확인된 5개 업종만 반영했습니다.
+    작은 점은 업종별 실제 점포 수(마트 91·편의점 35·카페 106·호텔 30)만큼 상권 경계 안에 무작위로 배치한 밀도 표시이며, 개별 점포의 실제 주소가 아닙니다. 백화점(1개)은 대표 핀 하나로 이미 전체를 나타내 별도 점을 추가하지 않았습니다.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var counts = [
+    { type: '마트',   color: 'var(--c-mart)',  n: 91 },
+    { type: '편의점', color: 'var(--c-cvs)',   n: 35 },
+    { type: '카페',   color: 'var(--c-cafe)',  n: 106 },
+    { type: '호텔',   color: 'var(--c-hotel)', n: 30 }
+  ];
+  var map = document.getElementById('map');
+  var radiusPct = 38; // 상권 경계(반경 39.5%) 안쪽
+  var seed = 42;
+  function rand() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+
+  counts.forEach(function (c) {
+    for (var i = 0; i < c.n; i++) {
+      var angle = rand() * Math.PI * 2;
+      var r = Math.sqrt(rand()) * radiusPct;
+      var dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.left = (50 + r * Math.cos(angle)) + '%';
+      dot.style.top = (50 + r * Math.sin(angle)) + '%';
+      dot.style.background = c.color;
+      dot.title = c.type;
+      map.appendChild(dot);
+    }
+  });
+})();
+</script>
+</body>
+</html>
