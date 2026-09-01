@@ -20,18 +20,18 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 
 | # | 실행 | 스크립트 | 결과 파일 |
 |---|---|---|---|
-| 1 | 시뮬레이션 1 — 기본 정보만 | `visit_simulation1.py` | `outputs/visit_simulation1_results.csv` |
-| 2 | 시뮬레이션 2 — + 1단계 상권 분석 결과 | `visit_simulation2.py` | `outputs/visit_simulation2_results.csv` |
-| 3 | 시뮬레이션 3 — + 요일특성 + 반편향 지시 | `visit_simulation3.py` | `outputs/visit_simulation3_results.csv` |
-| 4 | 대조실험 1 — "방문" 표현 5종 비교 | `ablation_visit_wording.py` | `outputs/ablation_visit_wording_results.csv`, `outputs/wording_comparison_report.md` |
-| 5 | 대조실험 2 — 패션/섬유/액세서리 직업군 필터링 | `ablation_fashion_occupation.py` | `outputs/fashion_occupation_comparison_report.md` (원본 CSV는 로컬에만 있고 이 저장소엔 없음 — 아래 참고) |
+| 1 | 시뮬레이션 1 — 기본 정보만 | [`visit_simulation1.py`](./visit_simulation1.py) | [`outputs/visit_simulation1_results.csv`](./outputs/visit_simulation1_results.csv) |
+| 2 | 시뮬레이션 2 — + 1단계 상권 분석 결과 | [`visit_simulation2.py`](./visit_simulation2.py) | [`outputs/visit_simulation2_results.csv`](./outputs/visit_simulation2_results.csv) |
+| 3 | 시뮬레이션 3 — + 요일특성 + 반편향 지시 | [`visit_simulation3.py`](./visit_simulation3.py) | [`outputs/visit_simulation3_results.csv`](./outputs/visit_simulation3_results.csv) |
+| 4 | 대조실험 1 — "방문" 표현 5종 비교 | [`ablation_visit_wording.py`](./ablation_visit_wording.py) | [`outputs/ablation_visit_wording_results.csv`](./outputs/ablation_visit_wording_results.csv), [`outputs/wording_comparison_report.md`](./outputs/wording_comparison_report.md) |
+| 5 | 대조실험 2 — 패션/섬유/액세서리 직업군 필터링 | [`ablation_fashion_occupation.py`](./ablation_fashion_occupation.py) | [`outputs/fashion_occupation_comparison_report.md`](./outputs/fashion_occupation_comparison_report.md) (원본 CSV는 로컬에만 있고 이 저장소엔 없음 — 아래 참고) |
 
-공통 비교 스크립트: `compare_results.py`(1·2·3용), `compare_wording.py`(4용),
-`compare_fashion_occupation.py`(5용) — 모두 API 호출 없이 `outputs/`의 결과와
-`data/real_distribution.json`(실제값)을 비교해 MAE 표를 만든다.
+공통 비교 스크립트: [`compare_results.py`](./compare_results.py)(1·2·3용), [`compare_wording.py`](./compare_wording.py)(4용),
+[`compare_fashion_occupation.py`](./compare_fashion_occupation.py)(5용) — 모두 API 호출 없이 [`outputs/`](./outputs)의 결과와
+[`data/real_distribution.json`](./data/real_distribution.json)(실제값)을 비교해 MAE 표를 만든다.
 
 > ⚠️ `outputs/ablation_fashion_occupation_results.csv`(대조실험 2의 원본 질의 결과)는
-> 사용자가 요약 리포트(`fashion_occupation_comparison_report.md`)만 공유해서 이
+> 사용자가 요약 리포트([`fashion_occupation_comparison_report.md`](./outputs/fashion_occupation_comparison_report.md))만 공유해서 이
 > 세션에는 원본 CSV가 없습니다. 나중에 커밋하려면 로컬 `outputs/` 폴더에서 그대로
 > 가져와 추가하면 됩니다.
 
@@ -46,7 +46,7 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 
 ### 2) 시뮬레이션 2 — + 1단계 상권 분석 결과
 
-시뮬레이션 1과 동일 조건에, `data/stage1_district_facts.json`(팀원이 만든 1단계
+시뮬레이션 1과 동일 조건에, [`data/stage1_district_facts.json`](./data/stage1_district_facts.json)(팀원이 만든 1단계
 프롬프트를 Claude Opus 4.8로 실행한 결과, 2026-08-24, 사용자 제공)에서 **한줄요약 +
 대표업종_운영시간 + 방문목적**만 가져와 상권 설명에 추가했다(팀원 2단계 프롬프트 스펙
 그대로).
@@ -103,6 +103,70 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 방향은 맞지만 효과가 작다 — **일반 인구 표본으로 특수 목적(B2B 도소매) 상권의 요일
 패턴을 재현하는 데는 구조적 한계**가 있다는 쪽으로 결론.
 
+## 분포 비교 표 — 실제 vs 시뮬레이션 1·2·3
+
+[`compare_results.py`](./compare_results.py) 실행 결과([`outputs/comparison_report.md`](./outputs/comparison_report.md))를 그대로 옮긴 표다.
+연령대·성별·시간대·요일 각각 실제 비율(%)과 세 시뮬레이션의 비율(%), 그리고 그 오차
+(MAE, 낮을수록 실제에 가까움)를 보여준다.
+
+### 연령대
+
+| 연령대 | 실제(%) | 시뮬1(%) | 시뮬2(%) | 시뮬3(%) |
+|---|---|---|---|---|
+| 10대 | 5.61 | 1.40 | 1.80 | 1.60 |
+| 20대 | 17.80 | 28.40 | 31.20 | 27.60 |
+| 30대 | 21.17 | 19.40 | 19.40 | 24.60 |
+| 40대 | 20.66 | 16.40 | 14.80 | 13.00 |
+| 50대 | 16.02 | 16.40 | 15.20 | 16.00 |
+| 60대+ | 18.74 | 18.00 | 17.60 | 17.20 |
+| **합계** | **100.00** | **100.00** | **100.00** | **100.00** |
+| **MAE** |  | **3.66** | **4.47** | **4.41** |
+
+### 성별
+
+| 성별 | 실제(%) | 시뮬1(%) | 시뮬2(%) | 시뮬3(%) |
+|---|---|---|---|---|
+| 남 | 46.80 | 46.40 | 51.60 | 47.40 |
+| 여 | 53.20 | 53.60 | 48.40 | 52.60 |
+| **합계** | **100.00** | **100.00** | **100.00** | **100.00** |
+| **MAE** |  | **0.4** | **4.8** | **0.6** |
+
+### 시간대
+
+| 시간대 | 실제(%) | 시뮬1(%) | 시뮬2(%) | 시뮬3(%) |
+|---|---|---|---|---|
+| 00-06 | 16.98 | 0.00 | 0.00 | 0.00 |
+| 06-11 | 19.53 | 0.00 | 0.00 | 0.40 |
+| 11-14 | 16.21 | 45.00 | 56.60 | 53.60 |
+| 14-17 | 16.52 | 24.80 | 17.20 | 14.60 |
+| 17-21 | 19.12 | 29.80 | 23.20 | 25.60 |
+| 21-24 | 11.63 | 0.40 | 3.00 | 5.80 |
+| **합계** | **100.00** | **100.00** | **100.00** | **100.00** |
+| **MAE** |  | **15.92** | **15.05** | **14.62** |
+
+### 요일
+
+| 요일 | 실제(%) | 시뮬1(%) | 시뮬2(%) | 시뮬3(%) |
+|---|---|---|---|---|
+| 월 | 15.22 | 0.00 | 0.00 | 0.20 |
+| 화 | 15.58 | 1.00 | 1.20 | 1.80 |
+| 수 | 15.85 | 0.40 | 0.00 | 0.40 |
+| 목 | 15.48 | 0.00 | 0.40 | 0.60 |
+| 금 | 14.79 | 12.20 | 11.60 | 17.60 |
+| 토 | 11.68 | 74.00 | 82.80 | 76.80 |
+| 일 | 11.40 | 12.40 | 4.00 | 2.00 |
+| **합계** | **100.00** | **100.00** | **100.00** | **100.00** |
+| **MAE** |  | **18.09** | **20.32** | **19.49** |
+
+### 시뮬레이션 간 MAE 한눈에 보기
+
+| 항목 | 시뮬1 MAE | 시뮬2 MAE | 시뮬3 MAE |
+|---|---|---|---|
+| 연령대 | 3.66 | 4.47 | 4.41 |
+| 성별 | 0.4 | 4.8 | 0.6 |
+| 시간대 | 15.92 | 15.05 | 14.62 |
+| 요일 | 18.09 | 20.32 | 19.49 |
+
 ## 폴더 구성
 
 ```
@@ -136,13 +200,13 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 
 | 데이터 | 원본 | 비고 |
 |---|---|---|
-| 추정 유동인구(연령대·성별·시간대·요일) | 서울열린데이터광장 — 서울시 상권분석서비스(추정유동인구-상권) | 상권_코드 3001493, 2026년 1분기(20261) 기준. 사용자가 제공한 원본 CSV를 `data/raw/`에 그대로 보관 |
-| 점포 수(업종별) | 서울열린데이터광장 — 서울시 상권분석서비스(점포-상권) | 상권_코드 3001493, 2026년 1분기 기준. 사용자가 제공한 원본 xlsx를 `data/raw/`에 그대로 보관 |
-| 페르소나 풀 | nvidia/Nemotron-Personas-Korea | `prepare_personas.py`로 원본에서 직접 생성(100만 행) |
+| 추정 유동인구(연령대·성별·시간대·요일) | 서울열린데이터광장 — 서울시 상권분석서비스(추정유동인구-상권) | 상권_코드 3001493, 2026년 1분기(20261) 기준. 사용자가 제공한 원본 CSV를 [`data/raw/`](./data/raw)에 그대로 보관 |
+| 점포 수(업종별) | 서울열린데이터광장 — 서울시 상권분석서비스(점포-상권) | 상권_코드 3001493, 2026년 1분기 기준. 사용자가 제공한 원본 xlsx를 [`data/raw/`](./data/raw)에 그대로 보관 |
+| 페르소나 풀 | nvidia/Nemotron-Personas-Korea | [`prepare_personas.py`](./prepare_personas.py)로 원본에서 직접 생성(100만 행) |
 | 상권 분석(1단계) | 사용자 제공, 2026-08-24 | 팀원이 만든 1단계 프롬프트(모델: Claude Opus 4.8)를 동대문패션타운에 대해 실행한 결과 |
 
-`prepare_real_data.py`를 돌리면 위 유동인구·점포 원본에서 실제 연령대(%)·성별(%)·시간대(%)·
-요일(%)과 매장 유형별 점포 수를 계산해 `data/real_distribution.json`에 저장한다
+[`prepare_real_data.py`](./prepare_real_data.py)를 돌리면 위 유동인구·점포 원본에서 실제 연령대(%)·성별(%)·시간대(%)·
+요일(%)과 매장 유형별 점포 수를 계산해 [`data/real_distribution.json`](./data/real_distribution.json)에 저장한다
 (2026 Q1 단일 분기 기준).
 
 **실제 유동인구 기준값 (2026 Q1, 상권_코드 3001493 동대문패션타운 관광특구, 총 유동인구 3,054,932명):**
@@ -170,7 +234,7 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 | 91 | 35 | 106 | 346 | 0 |
 
 - 음식점 = 한식154 + 중식22 + 일식18 + 양식45 + 패스트푸드25 + 치킨12 + 분식52 + 제과점18
-  (호프-간이주점 26곳은 주류업으로 보고 제외) — 분류 기준은 `prepare_real_data.py`의
+  (호프-간이주점 26곳은 주류업으로 보고 제외) — 분류 기준은 [`prepare_real_data.py`](./prepare_real_data.py)의
   `FOOD_CODES`에서 바꿀 수 있다.
 - **백화점 0개**는 실제 데이터 그대로다. 점포-상권 원본에 이 상권의 '백화점' 업종 코드
   자체가 없어서(동대문패션타운은 공식 업종 분류상 도소매 상가 중심 상권), 데이터에 없는
@@ -182,7 +246,7 @@ nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방
 nvidia/Nemotron-Personas-Korea 원본에는 구조화된 인구통계 컬럼 10개(uuid, sex, age,
 marital_status, occupation, district, province, housing_type, education_level,
 family_type)와 별개로 `hobbies_and_interests`(취미·성향) 같은 자연어 텍스트 필드가
-있다. `prepare_personas.py`가 HF 원본 9개 parquet 조각에서 이 11개 컬럼만 받아와
+있다. [`prepare_personas.py`](./prepare_personas.py)가 HF 원본 9개 parquet 조각에서 이 11개 컬럼만 받아와
 페르소나 풀을 만든다. 거주지는 팀원 프롬프트 예시엔 없었지만 원래 페르소나가 갖고 있던
 기본 정보라 그대로 남겼다(사용자 확인). 결과적으로 다섯 실행 모두 페르소나를
 "나이·성별·직업·거주지·취미·성향" 5개 필드로 LLM에 전달한다:
@@ -208,7 +272,7 @@ family_type)와 별개로 `hobbies_and_interests`(취미·성향) 같은 자연�
 "상권 정보는 '이곳이 어떤 장소인지'에 대한 설명일 뿐이니, 실제 방문객의 분포나 통계를
 맞추려 하지 말고 인물의 성향만으로 독립적으로 판단하라."
 
-**시뮬레이션 2**는 `data/stage1_district_facts.json`에서 한줄요약+대표업종_운영시간+
+**시뮬레이션 2**는 [`data/stage1_district_facts.json`](./data/stage1_district_facts.json)에서 한줄요약+대표업종_운영시간+
 방문목적만 가져와 상권 설명에 추가한다(팀원 2단계 프롬프트 스펙 그대로). 팀원 원본과
 다르게 진행한 부분을 투명하게 밝혀둔다:
 - 원본은 페르소나 1명씩 물어보는 형태였지만, 500명 수락까지 채우려면 수천 명을 질의해야
@@ -258,7 +322,7 @@ python ablation_fashion_occupation.py --n 300 --batch-size 25
 python compare_fashion_occupation.py
 ```
 
-- 각 스크립트는 `outputs/`에 이미 결과가 있으면 이어서 진행한다(같은 시드로 셔플하므로
+- 각 스크립트는 [`outputs/`](./outputs)에 이미 결과가 있으면 이어서 진행한다(같은 시드로 셔플하므로
   이미 처리한 만큼 건너뛰고 계속 질의).
 - `--max-agents`(기본 5,000)는 예산 보호용 안전 상한. 실제 수락률은 15-22% 수준이라
   500명 채우는 데 보통 2,300-3,400명 질의가 필요했다(5,000이면 여유 있음).
@@ -268,8 +332,8 @@ python compare_fashion_occupation.py
 
 연령대 분포에서 10대 비중이 실제·시뮬 모두 작다는 점(실제 5.6%, 시뮬 1.4-1.8%)에
 착안해, 10대 구간을 빼고 나머지 5개 구간(20대-60대+)만 다시 100%로 정규화했을 때
-연령대 오차(MAE)가 어떻게 바뀌는지 `compare_results.py`가 자동으로 함께 계산한다
-(`outputs/comparison_report.md`의 ④번 항목, `report.html`의 "03" 섹션).
+연령대 오차(MAE)가 어떻게 바뀌는지 [`compare_results.py`](./compare_results.py)가 자동으로 함께 계산한다
+([`outputs/comparison_report.md`](./outputs/comparison_report.md)의 ④번 항목, [`report.html`](./report.html)의 "03" 섹션).
 
 | 시뮬레이션 | 원본(10대 포함) MAE | 10대 제외 정규화 MAE |
 |---|---|---|
