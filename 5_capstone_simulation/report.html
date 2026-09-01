@@ -1,0 +1,953 @@
+<title>동대문패션타운 시뮬레이션 보고서</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap">
+<style>
+  :root {
+    --paper: #f3f4f6;
+    --surface: #fcfcfb;
+    --ink: #14181f;
+    --ink-2: #52545c;
+    --ink-muted: #83858c;
+    --hairline: #dcdde2;
+    --hairline-strong: #c4c6cc;
+    --accent: #1c5cab;
+    --accent-ink: #ffffff;
+    --tag-bg: #e8edf6;
+    --good: #0ca30c;
+    --serious: #d03b3b;
+
+    --s-real: #2a78d6;
+    --s-real-dark: #3987e5;
+    --s-1: #eb6834;
+    --s-1-dark: #d95926;
+    --s-2: #1baf7a;
+    --s-2-dark: #199e70;
+    --s-3: #eda100;
+    --s-3-dark: #c98500;
+    --s-4: #e87ba4;
+    --s-4-dark: #d55181;
+    --s-5: #4a3aa7;
+    --s-5-dark: #9085e9;
+
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0c0d0f;
+      --surface: #1a1a19;
+      --ink: #f2f2f0;
+      --ink-2: #c3c2b7;
+      --ink-muted: #8b8a83;
+      --hairline: #2c2c2a;
+      --hairline-strong: #3d3d3a;
+      --accent: #6fa8e8;
+      --accent-ink: #0c0d0f;
+      --tag-bg: #1c2733;
+      --good: #35c235;
+      --serious: #e66767;
+      --s-real: var(--s-real-dark);
+      --s-1: var(--s-1-dark);
+      --s-2: var(--s-2-dark);
+      --s-3: var(--s-3-dark);
+      --s-4: var(--s-4-dark);
+      --s-5: var(--s-5-dark);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0c0d0f;
+    --surface: #1a1a19;
+    --ink: #f2f2f0;
+    --ink-2: #c3c2b7;
+    --ink-muted: #8b8a83;
+    --hairline: #2c2c2a;
+    --hairline-strong: #3d3d3a;
+    --accent: #6fa8e8;
+    --accent-ink: #0c0d0f;
+    --tag-bg: #1c2733;
+    --good: #35c235;
+    --serious: #e66767;
+    --s-real: var(--s-real-dark);
+    --s-1: var(--s-1-dark);
+    --s-2: var(--s-2-dark);
+    --s-3: var(--s-3-dark);
+    --s-4: var(--s-4-dark);
+    --s-5: var(--s-5-dark);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  h1, h2, h3 {
+    font-family: 'Gowun Batang', 'Noto Serif KR', serif;
+    font-weight: 700;
+    text-wrap: balance;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .sheet {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 28px 120px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-head { margin-bottom: 56px; }
+  .eyebrow {
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+  .report-head h1 {
+    font-size: clamp(28px, 4.4vw, 40px);
+    margin: 0 0 18px;
+  }
+  .report-head .lede {
+    font-size: 17.5px;
+    color: var(--ink-2);
+    max-width: 62ch;
+    margin: 0 0 28px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--hairline);
+  }
+  .meta-item { font-size: 13.5px; color: var(--ink-muted); }
+  .meta-item b { color: var(--ink-2); font-weight: 600; }
+
+  /* ---------- Sections ---------- */
+  section { margin-top: 76px; }
+  .sec-num {
+    font-family: 'Gowun Batang', serif;
+    font-size: 13px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    margin: 0 0 8px;
+  }
+  h2 {
+    font-size: clamp(22px, 3.2vw, 27px);
+    margin: 0 0 6px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--hairline-strong);
+  }
+  h3 {
+    font-size: 18.5px;
+    margin: 40px 0 14px;
+  }
+  p { margin: 0 0 16px; max-width: 68ch; }
+  p.wide { max-width: none; }
+  strong { font-weight: 700; color: var(--ink); }
+  .muted { color: var(--ink-muted); }
+
+  /* ---------- Callouts ---------- */
+  .finding {
+    margin: 22px 0;
+    padding: 18px 22px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-left: 3px solid var(--accent);
+    border-radius: 2px;
+  }
+  .finding .flabel {
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .finding p { margin: 0; max-width: none; }
+  .finding.warn { border-left-color: var(--serious); }
+  .finding.warn .flabel { color: var(--serious); }
+  .finding.good { border-left-color: var(--good); }
+  .finding.good .flabel { color: var(--good); }
+
+  /* ---------- Stat tiles ---------- */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    margin: 28px 0;
+  }
+  .stat-tile {
+    background: var(--surface);
+    padding: 18px 18px 16px;
+  }
+  .stat-tile .label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .stat-tile .value {
+    font-family: 'Gowun Batang', serif;
+    font-size: 26px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-tile .value small { font-size: 14px; font-weight: 400; color: var(--ink-muted); }
+  .stat-tile .delta { font-size: 12.5px; margin-top: 6px; }
+  .stat-tile .delta.up { color: var(--serious); }
+  .stat-tile .delta.down { color: var(--good); }
+
+  /* ---------- Tables ---------- */
+  .table-wrap { overflow-x: auto; margin: 20px 0 8px; }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14.5px;
+    min-width: 480px;
+  }
+  caption {
+    text-align: left;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+    caption-side: top;
+  }
+  th, td {
+    padding: 9px 14px;
+    text-align: right;
+    border-bottom: 1px solid var(--hairline);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+  thead th {
+    font-weight: 700;
+    color: var(--ink-2);
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid var(--hairline-strong);
+  }
+  tbody tr:last-child td { border-bottom: 1px solid var(--hairline-strong); }
+  tr.total td, tr.highlight td { font-weight: 700; }
+  tr.highlight td { background: var(--tag-bg); }
+  td.tag {
+    font-size: 12px; text-align: left; color: var(--ink-muted); font-weight: 400;
+  }
+
+  /* ---------- Chart card ---------- */
+  .chart-card {
+    margin: 22px 0 30px;
+    border: 1px solid var(--hairline);
+    background: var(--surface);
+    padding: 20px 20px 8px;
+  }
+  .chart-card .chart-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink-2);
+    margin: 0 0 2px;
+  }
+  .chart-card .chart-sub {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    margin: 0 0 12px;
+  }
+  .chart-card svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    margin: 10px 0 14px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .legend .lg { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 620px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Findings list ---------- */
+  ol.findings-list { padding-left: 0; list-style: none; margin: 22px 0; counter-reset: f; }
+  ol.findings-list > li {
+    counter-increment: f;
+    padding: 16px 0 16px 46px;
+    position: relative;
+    border-top: 1px solid var(--hairline);
+    max-width: none;
+  }
+  ol.findings-list > li::before {
+    content: counter(f, decimal-leading-zero);
+    position: absolute;
+    left: 0; top: 16px;
+    font-family: 'Gowun Batang', serif;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 15px;
+  }
+  ol.findings-list > li h4 { margin: 0 0 6px; font-size: 15.5px; font-family: 'Gowun Dodum'; font-weight: 700; }
+  ol.findings-list > li p { margin: 0; max-width: none; color: var(--ink-2); font-size: 14.5px; }
+
+  footer {
+    margin-top: 90px;
+    padding-top: 22px;
+    border-top: 1px solid var(--hairline);
+    font-size: 12.5px;
+    color: var(--ink-muted);
+  }
+
+  code {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.88em;
+    background: var(--tag-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="report-head">
+    <p class="eyebrow">캡스톤 실험 보고서 · Population Simulation</p>
+    <h1>페르소나 기반 상권 방문 시뮬레이션이<br>동대문패션타운 실제 유동인구를 얼마나 재현하는가</h1>
+    <p class="lede">
+      nvidia/Nemotron-Personas-Korea 페르소나 100만 명 풀에 "이 상권을 방문하겠는가"를 반복
+      질의하여 방문 수락자 500명을 채우고, 그 구성이 서울시 실제 유동인구 통계와 얼마나
+      일치하는지 검증한다. 기본 정보만 준 조건(시뮬레이션 1)에서 출발해 상권 분석 정보를
+      단계적으로 추가하며(시뮬레이션 2·3) 오차가 어떻게 바뀌는지, 그리고 남은 오차의 원인을
+      두 건의 대조실험으로 추적한다.
+    </p>
+    <div class="meta-row">
+      <span class="meta-item"><b>대상 상권</b> 동대문패션타운 관광특구 (상권코드 3001493)</span>
+      <span class="meta-item"><b>실제 데이터 기준</b> 2026년 1분기 · 총 유동인구 3,054,932명</span>
+      <span class="meta-item"><b>에이전트 풀</b> 1,000,000명</span>
+      <span class="meta-item"><b>모델</b> gpt-5.4-mini</span>
+    </div>
+  </header>
+
+  <!-- ============ 0. 요약 ============ -->
+  <section id="summary">
+    <p class="sec-num">Executive Summary</p>
+    <h2>한눈에 보는 결과</h2>
+    <p class="wide">
+      상권 설명에 정보를 더한다고 항상 실제값에 가까워지지는 않았다. 성별 오차는 반편향
+      지시문 한 줄로 거의 완전히 회복됐지만(MAE 4.8 → 0.6), 요일 오차는 정보를 추가하고
+      (요일특성 반영), 문구를 5가지로 바꿔보고, 페르소나 직업군을 필터링해도 대부분
+      해소되지 않았다. 실제 동대문은 평일이 더 붐비는 도소매 상권인데, 세 시뮬레이션 모두
+      방문자의 70% 이상을 토요일로 몰아넣었다.
+    </p>
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="label">성별 오차 개선</div>
+        <div class="value">4.8 → 0.6</div>
+        <div class="delta down">반편향 지시문 한 줄로 해결</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">요일 오차, 3라운드 내내</div>
+        <div class="value">18~20</div>
+        <div class="delta up">MAE, 거의 개선 안 됨</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">최적 조건 토요일 쏠림</div>
+        <div class="value">64.7<small>%</small></div>
+        <div class="delta up">실제는 11.7%</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">500명 채우는 데 필요한 질의</div>
+        <div class="value">2,325<small>~</small>3,326<small>명</small></div>
+        <div class="delta">수락률 15~22%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 1. 실험 설계 ============ -->
+  <section id="design">
+    <p class="sec-num">01</p>
+    <h2>실험 설계</h2>
+    <p>
+      세 시뮬레이션 모두 페르소나 추출 순서(고정 시드)·매장 구성 문장·목표 인원(500명 수락)·
+      질문 형식이 동일하다. 상권 설명에 실리는 정보만 단계적으로 달라진다.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <caption>실험 설정 비교</caption>
+        <thead>
+          <tr><th>항목</th><th>시뮬레이션 1</th><th>시뮬레이션 2</th><th>시뮬레이션 3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>상권 정보</td><td class="tag">이름 · 상권코드 · 매장 유형별 점포 수</td><td class="tag">시뮬1 + 1단계 상권 분석 결과</td><td class="tag">시뮬2 + 요일특성 + 반편향 지시문</td></tr>
+          <tr><td>질의한 에이전트 수</td><td>2,325명</td><td>3,326명</td><td>3,073명</td></tr>
+          <tr><td>수락률</td><td>21.5%</td><td>15.3%</td><td>16.3%</td></tr>
+          <tr><td>채워진 방문자 수</td><td>500명</td><td>500명</td><td>500명</td></tr>
+          <tr><td>매장 구성</td><td colspan="3" class="tag">마트 91 · 백화점 0 · 편의점 35 · 카페 106 · 음식점 346 (5종, 실제 점포 데이터 기준)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>실제 유동인구 기준값</h3>
+    <p>
+      서울열린데이터광장 「서울시 상권분석서비스(추정유동인구-상권)」 2026년 1분기 원본에서
+      계산한, 이 상권의 실제 연령·성별·시간대·요일 분포다. 아래 모든 비교의 기준선이 된다.
+    </p>
+    <div class="chart-card">
+      <p class="chart-title">실제 유동인구 분포 — 4개 축</p>
+      <p class="chart-sub">동대문패션타운 관광특구, 2026 Q1, 총 유동인구 3,054,932명</p>
+      <div id="chart-real-overview"></div>
+    </div>
+  </section>
+
+  <!-- ============ 2. 시뮬레이션 결과 ============ -->
+  <section id="results">
+    <p class="sec-num">02</p>
+    <h2>시뮬레이션 1 · 2 · 3 비교</h2>
+    <p>
+      네 지표(연령대·성별·시간대·요일) 모두 실제 분포와의 평균절대오차(MAE, %p)로 나타낸다.
+      값이 작을수록 실제와 가깝다.
+    </p>
+
+    <div class="chart-card">
+      <p class="chart-title">지표별 MAE 비교</p>
+      <p class="chart-sub">%p, 낮을수록 실제 분포에 근접</p>
+      <div id="chart-mae"></div>
+    </div>
+
+    <div class="finding warn">
+      <p class="flabel">핵심 관찰</p>
+      <p>
+        정보를 추가할수록 좋아진 지표는 시간대뿐이다(15.92 → 15.05 → 14.62). 연령대와 요일은
+        시뮬레이션 1이 오히려 가장 낮은 MAE를 유지했고, 성별은 시뮬레이션 2에서 크게
+        악화됐다가(0.4 → 4.8) 반편향 지시문을 더한 시뮬레이션 3에서 거의 회복됐다(0.6).
+      </p>
+    </div>
+
+    <h3>연령대 분포</h3>
+    <div class="chart-card">
+      <p class="chart-title">연령대별 실제 vs 시뮬레이션</p>
+      <p class="chart-sub">10대 포함 원본 비율(%)</p>
+      <div id="chart-age"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>연령대</th><th>실제</th><th>시뮬1</th><th>시뮬2</th><th>시뮬3</th></tr></thead>
+        <tbody id="tbl-age"></tbody>
+      </table>
+    </div>
+
+    <h3>성별 분포</h3>
+    <div class="chart-card">
+      <p class="chart-title">성별 실제 vs 시뮬레이션</p>
+      <p class="chart-sub">비율(%)</p>
+      <div id="chart-gender"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>성별</th><th>실제</th><th>시뮬1</th><th>시뮬2</th><th>시뮬3</th></tr></thead>
+        <tbody id="tbl-gender"></tbody>
+      </table>
+    </div>
+
+    <h3>시간대 분포</h3>
+    <div class="chart-card">
+      <p class="chart-title">시간대별 실제 vs 시뮬레이션</p>
+      <p class="chart-sub">비율(%) · 00-06, 06-11 두 구간은 세 시뮬레이션 모두 0%에 가까움</p>
+      <div id="chart-time"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>시간대</th><th>실제</th><th>시뮬1</th><th>시뮬2</th><th>시뮬3</th></tr></thead>
+        <tbody id="tbl-time"></tbody>
+      </table>
+    </div>
+
+    <h3>요일 분포</h3>
+    <div class="chart-card">
+      <p class="chart-title">요일별 실제 vs 시뮬레이션</p>
+      <p class="chart-sub">비율(%) · 실제는 평일이 더 붐비고(월~금 14.8~15.9%), 시뮬은 토요일에 쏠림</p>
+      <div id="chart-day"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>요일</th><th>실제</th><th>시뮬1</th><th>시뮬2</th><th>시뮬3</th></tr></thead>
+        <tbody id="tbl-day"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 3. 10대 정규화 ============ -->
+  <section id="normalize">
+    <p class="sec-num">03</p>
+    <h2>10대 구간을 제외하면 연령 오차가 줄어드는가</h2>
+    <p>
+      10대 비중이 실제·시뮬 모두 작다는 점(실제 5.6%, 시뮬 1.4~1.8%)에 착안해, 10대를 빼고
+      나머지 5개 구간(20대~60대+)만 다시 100%로 정규화했을 때 오차가 어떻게 바뀌는지 봤다.
+    </p>
+    <div class="chart-card">
+      <p class="chart-title">연령대 MAE — 원본 vs 10대 제외 정규화</p>
+      <p class="chart-sub">%p</p>
+      <div id="chart-teen"></div>
+    </div>
+    <div class="finding">
+      <p class="flabel">결과</p>
+      <p>
+        정규화 효과는 시뮬레이션마다 달랐다. 시뮬레이션 1은 오히려 소폭 악화됐고(3.66 → 3.98),
+        시뮬레이션 2·3도 마찬가지였다(4.47 → 5.16, 4.41 → 4.70). 10대 비중 자체가 원래
+        작았기 때문에, 이를 제외하는 정규화가 전체 오차를 유의미하게 줄이지는 못했다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 4. 요일 편향 원인 분석 ============ -->
+  <section id="root-cause">
+    <p class="sec-num">04</p>
+    <h2>왜 요일만 안 고쳐지는가 — 원인 추적</h2>
+    <p>
+      요일 오차가 세 라운드 내내 개선되지 않아서, 원인을 좁혀가는 세 갈래 진단을 추가로
+      진행했다.
+    </p>
+
+    <h3>4-1. 직업별로 나눠보면</h3>
+    <p>
+      추가 비용 없이 시뮬레이션 3 결과(500명)를 직업 텍스트 기준으로 나눠봤다. "판매·상인·
+      자영업" 계열 직업을 가진 페르소나는 22명(4.4%)뿐이었지만, 이들의 요일 패턴은 나머지와
+      뚜렷이 달랐다.
+    </p>
+    <div class="chart-card">
+      <p class="chart-title">직업군별 토요일 방문 비중 (시뮬레이션 3 내부)</p>
+      <p class="chart-sub">점선 = 실제 토요일 비중 11.7%</p>
+      <div id="chart-occ-internal"></div>
+    </div>
+
+    <h3>4-2. "방문"이라는 단어를 바꿔보면</h3>
+    <p>
+      "방문"이 관광·나들이 어감을 준다는 가설로, 같은 300명에게 동사구만 5가지로 바꿔
+      물었다(상권 정보·반편향 지시문은 동일하게 유지).
+    </p>
+    <div class="chart-card">
+      <p class="chart-title">표현별 토요일 방문 비중</p>
+      <p class="chart-sub">점선 = 실제 토요일 비중 11.7% · n=300 각각</p>
+      <div id="chart-wording"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <caption>표현 대조실험 상세</caption>
+        <thead><tr><th>표현</th><th>수락률</th><th>시간대 MAE</th><th>요일 MAE</th><th>토요일 비중</th></tr></thead>
+        <tbody id="tbl-wording"></tbody>
+      </table>
+    </div>
+    <div class="finding warn">
+      <p class="flabel">결론 1</p>
+      <p>
+        5개 표현 모두 토요일 71~83%로 쏠려, 표현을 바꾸는 것만으로는 요일 편향이 해소되지
+        않았다. 오히려 "가서 물건을 사거나 볼일을 볼지"처럼 구체적 용무를 명시한 표현이
+        가장 나빴다(요일 MAE 20.21) — 판단 범위를 좁혀 수락률만 떨어뜨렸다(12.0%).
+      </p>
+    </div>
+
+    <h3>4-3. 페르소나 풀을 패션 직업군으로 좁혀보면</h3>
+    <p>
+      페르소나 풀 100만 명 중 의류·섬유·신발·가방·액세서리 관련 현직 종사자만 걸러내면
+      2,417명이 남는다. 이 안에서 300명을 뽑아 시뮬레이션 3과 동일한 프롬프트로 다시
+      질의했다.
+    </p>
+    <div class="chart-card">
+      <p class="chart-title">일반 인구 vs 패션 직업군 — 토요일 비중</p>
+      <p class="chart-sub">점선 = 실제 토요일 비중 11.7%</p>
+      <div id="chart-occ-filter"></div>
+    </div>
+    <div class="two-col">
+      <div class="chart-card">
+        <p class="chart-title">요일 MAE</p>
+        <div id="chart-occ-mae-day"></div>
+      </div>
+      <div class="chart-card">
+        <p class="chart-title">시간대 MAE</p>
+        <div id="chart-occ-mae-time"></div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="label">패션 직업군 표본</div>
+        <div class="value">2,417<small>명 풀</small></div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">수락률</div>
+        <div class="value">52.0<small>%</small></div>
+        <div class="delta up">일반 인구 대비 3배 이상</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">토요일 비중 개선</div>
+        <div class="value">76.8 → 64.7</div>
+        <div class="delta down">여전히 실제(11.7%)와 큰 차이</div>
+      </div>
+    </div>
+    <div class="finding">
+      <p class="flabel">결론 2</p>
+      <p>
+        방향은 맞다 — 패션 직업군만으로 좁히자 토요일 쏠림이 줄고(76.8% → 64.7%) 두 MAE
+        모두 개선됐다. 앞서 4-1에서 본 직업별 격차(59.1% vs 77.6%, n=22)와 크기·방향이
+        일치해 우연이 아닌 것으로 보인다. 다만 효과의 <em>크기</em>가 작다 — 의류 판매원이라는
+        직업을 명시해도 여전히 절반 이상이 토요일로 몰린다. "일반 인구 표본으로 특수 목적
+        (B2B 도소매) 상권의 요일 패턴을 재현하는 데는 구조적 한계가 있다"는 쪽으로 결론
+        내렸다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 5. 결론 ============ -->
+  <section id="conclusion">
+    <p class="sec-num">05</p>
+    <h2>종합 결론</h2>
+
+    <ol class="findings-list">
+      <li>
+        <h4>정보를 더한다고 항상 정확해지지는 않는다</h4>
+        <p>
+          시뮬레이션 1(기본 정보만)이 연령대·성별·요일 세 지표에서 가장 낮은 MAE를 유지했다.
+          상권 분석 정보를 추가한 시뮬레이션 2는 오히려 성별·요일 오차를 키웠다 — 도소매·
+          야간이라는 서술이 의도치 않은 연상을 만든 것으로 보인다.
+        </p>
+      </li>
+      <li>
+        <h4>얕은 편향은 지시문 한 줄로 고쳐진다</h4>
+        <p>
+          성별 오차(MAE 4.8)는 "성별 고정관념에 의존하지 말라"는 문장 하나로 거의 원상
+          회복됐다(0.6). 프롬프트 내용이 순간적으로 만든 연상이었다는 뜻이다.
+        </p>
+      </li>
+      <li>
+        <h4>깊은 편향은 지시문으로 잘 안 고쳐진다</h4>
+        <p>
+          요일 오차(MAE 18~20)는 명시적 사실 정보(요일특성)와 반편향 지시문을 함께 줘도
+          거의 그대로였다. "상권 방문"이라는 질문 자체가 LLM에게 "주말 나들이"를 강하게
+          연상시키는, 훨씬 뿌리 깊은 패턴으로 보인다.
+        </p>
+      </li>
+      <li>
+        <h4>표현을 바꾸는 것만으로는 부족하다</h4>
+        <p>
+          동사구를 5가지로 바꿔봐도 토요일 쏠림은 71~83% 범위를 벗어나지 못했다. 문제는
+          단어 선택이 아니라 "상권에 [무언가] 하러 간다"는 프레임 자체에 있다.
+        </p>
+      </li>
+      <li>
+        <h4>구조적 원인: 일반 인구 표본과 특수 목적 상권의 불일치</h4>
+        <p>
+          동대문의 실제 평일 방문객 상당수는 전국에서 물건을 떼러 오는 소매상인이라는 특정
+          직업군인데, 일반 인구 무작위 표본에는 이 집단이 4~5%만 존재한다. 직업군을 좁히면
+          방향은 맞게 개선되지만(토요일 76.8%→64.7%), 완전히 해소되지는 않는다.
+        </p>
+      </li>
+    </ol>
+
+    <h3>한계</h3>
+    <p class="wide">
+      본 실험은 단일 상권(동대문패션타운)·단일 모델(gpt-5.4-mini)·단일 분기(2026 Q1) 기준
+      값에 한정된다. 대조실험 표본(각 300명)은 본 실험(500명 수락)보다 작아 방향성 확인
+      용도로만 해석해야 한다. 요일 응답 중 일부(1% 미만)가 요청한 7개 요일 형식을 벗어난
+      자유 응답("평일" 등)으로 나와 해당 분포 계산에서 제외됐다.
+    </p>
+  </section>
+
+  <!-- ============ 부록 ============ -->
+  <section id="appendix">
+    <p class="sec-num">Appendix</p>
+    <h2>재현 방법</h2>
+    <div class="table-wrap">
+      <table>
+        <caption>실행 스크립트</caption>
+        <thead><tr><th>스크립트</th><th>역할</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">prepare_personas.py</td><td class="tag" style="text-align:left">nvidia/Nemotron-Personas-Korea 원본에서 페르소나 풀(100만 명) 생성</td></tr>
+          <tr><td class="tag">prepare_real_data.py</td><td class="tag" style="text-align:left">서울열린데이터광장 원본 → 실제 분포 · 점포 수 정리</td></tr>
+          <tr><td class="tag">visit_simulation1/2/3.py</td><td class="tag" style="text-align:left">시뮬레이션 1·2·3 실행 (500명 수락까지)</td></tr>
+          <tr><td class="tag">ablation_visit_wording.py</td><td class="tag" style="text-align:left">대조실험 1 — "방문" 표현 5종 비교(n=300)</td></tr>
+          <tr><td class="tag">ablation_fashion_occupation.py</td><td class="tag" style="text-align:left">대조실험 2 — 패션 직업군 필터링(n=300)</td></tr>
+          <tr><td class="tag">compare_results.py / compare_wording.py / compare_fashion_occupation.py</td><td class="tag" style="text-align:left">실제값과 비교, MAE·보고서 생성</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    동대문패션타운 관광특구 상권 방문 시뮬레이션 · 5_capstone_simulation ·
+    실제 데이터: 서울열린데이터광장 서울시 상권분석서비스(2026 Q1) ·
+    페르소나: nvidia/Nemotron-Personas-Korea
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  function niceCeil(v) {
+    if (v <= 0) return 1;
+    const mag = Math.pow(10, Math.floor(Math.log10(v)));
+    const norm = v / mag;
+    let step;
+    if (norm <= 1) step = 1;
+    else if (norm <= 2) step = 2;
+    else if (norm <= 2.5) step = 2.5;
+    else if (norm <= 5) step = 5;
+    else step = 10;
+    return step * mag;
+  }
+
+  function fmt(n) {
+    return (Math.round(n * 10) / 10).toString();
+  }
+
+  // Grouped bar chart. series: [{label, colorVar, values:[...]}]
+  function groupedBar(containerId, categories, series, opts) {
+    opts = opts || {};
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    const W = 720, H = opts.height || 260;
+    const marginLeft = 34, marginRight = 8, marginTop = 12, marginBottom = 40;
+    const plotW = W - marginLeft - marginRight;
+    const plotH = H - marginTop - marginBottom;
+
+    const allVals = series.flatMap(function (s) { return s.values; }).concat(opts.refLine !== undefined ? [opts.refLine] : []);
+    const rawMax = Math.max.apply(null, allVals);
+    const yMax = opts.yMax || niceCeil(rawMax * 1.12);
+    const ticks = 4;
+
+    const n = categories.length;
+    const groupOuterGap = 20;
+    const groupW = (plotW - groupOuterGap) / n;
+    const barGap = series.length > 1 ? 3 : 0;
+    const barW = Math.max(4, (groupW - 10 - barGap * (series.length - 1)) / series.length);
+
+    function x(gi) { return marginLeft + groupOuterGap / 2 + gi * groupW; }
+    function y(v) { return marginTop + plotH - (v / yMax) * plotH; }
+
+    const ariaLabel = opts.aria || (categories.map(function (c) { return String(c).replace(/\n/g, ' '); }).join(', ') + ' 비교 차트');
+    let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + ariaLabel.replace(/"/g, '&quot;') + '">';
+
+    // gridlines + y ticks
+    for (let t = 0; t <= ticks; t++) {
+      const v = (yMax / ticks) * t;
+      const yy = y(v);
+      svg += '<line x1="' + marginLeft + '" x2="' + (W - marginRight) + '" y1="' + yy + '" y2="' + yy + '" stroke="var(--hairline)" stroke-width="1"/>';
+      svg += '<text x="' + (marginLeft - 8) + '" y="' + (yy + 4) + '" text-anchor="end" font-size="10.5" fill="var(--ink-muted)">' + fmt(v) + '</text>';
+    }
+    // baseline
+    svg += '<line x1="' + marginLeft + '" x2="' + (W - marginRight) + '" y1="' + y(0) + '" y2="' + y(0) + '" stroke="var(--hairline-strong)" stroke-width="1.2"/>';
+
+    // reference line (e.g., 실제값)
+    if (opts.refLine !== undefined) {
+      const ry = y(opts.refLine);
+      svg += '<line x1="' + marginLeft + '" x2="' + (W - marginRight) + '" y1="' + ry + '" y2="' + ry + '" stroke="var(--s-real)" stroke-width="1.6" stroke-dasharray="5 4"/>';
+      svg += '<text x="' + (W - marginRight) + '" y="' + (ry - 5) + '" text-anchor="end" font-size="10.5" fill="var(--s-real)" font-weight="700">' + (opts.refLabel || ('실제 ' + fmt(opts.refLine) + (opts.unit || ''))) + '</text>';
+    }
+
+    // bars
+    categories.forEach(function (cat, gi) {
+      const gx = x(gi);
+      series.forEach(function (s, si) {
+        const v = s.values[gi];
+        const bx = gx + si * (barW + barGap);
+        const by = y(v);
+        const bh = Math.max(0, y(0) - by);
+        svg += '<rect x="' + bx.toFixed(1) + '" y="' + by.toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + bh.toFixed(1) + '" fill="var(' + s.colorVar + ')" rx="1.5"/>';
+        if (opts.directLabels !== false && bh > 3) {
+          svg += '<text x="' + (bx + barW / 2).toFixed(1) + '" y="' + (by - 4).toFixed(1) + '" text-anchor="middle" font-size="9.5" fill="var(--ink-2)" font-variant-numeric="tabular-nums">' + fmt(v) + '</text>';
+        }
+      });
+      // category label (multi-line via \n -> tspan)
+      const labelCx = gx + (groupW - 10) / 2;
+      const lines = String(cat).split('\n');
+      const lineH = 13;
+      const labelY0 = H - marginBottom + 20 - (lines.length - 1) * (lineH / 2);
+      svg += '<text x="' + labelCx.toFixed(1) + '" y="' + labelY0 + '" text-anchor="middle" font-size="11" fill="var(--ink-2)">';
+      lines.forEach(function (ln, li) {
+        svg += '<tspan x="' + labelCx.toFixed(1) + '" dy="' + (li === 0 ? 0 : lineH) + '">' + ln + '</tspan>';
+      });
+      svg += '</text>';
+    });
+
+    svg += '</svg>';
+    el.innerHTML = svg;
+
+    if (opts.legend !== false && series.length > 1) {
+      const legend = document.createElement('div');
+      legend.className = 'legend';
+      series.forEach(function (s) {
+        const item = document.createElement('span');
+        item.className = 'lg';
+        item.innerHTML = '<span class="sw" style="background:var(' + s.colorVar + ')"></span>' + s.label;
+        legend.appendChild(item);
+      });
+      if (opts.refLine !== undefined) {
+        const item = document.createElement('span');
+        item.className = 'lg';
+        item.innerHTML = '<span class="sw" style="background:var(--s-real)"></span>' + (opts.refLabel || '실제');
+        legend.appendChild(item);
+      }
+      el.parentNode.insertBefore(legend, el.nextSibling);
+    }
+  }
+
+  function fillTable(tbodyId, categories, rows) {
+    // rows: {실제:[...], 시뮬1:[...], ...} aligned with categories
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    const keys = Object.keys(rows);
+    let html = '';
+    categories.forEach(function (cat, i) {
+      html += '<tr><td>' + cat + '</td>';
+      keys.forEach(function (k) {
+        html += '<td>' + fmt(rows[k][i]) + '</td>';
+      });
+      html += '</tr>';
+    });
+    tbody.innerHTML = html;
+  }
+
+  // ---------------- Data ----------------
+  const AGE_CATS = ['10대', '20대', '30대', '40대', '50대', '60대+'];
+  const REAL_AGE = [5.61, 17.80, 21.17, 20.66, 16.02, 18.74];
+  const SIM1_AGE = [1.40, 28.40, 19.40, 16.40, 16.40, 18.00];
+  const SIM2_AGE = [1.80, 31.20, 19.40, 14.80, 15.20, 17.60];
+  const SIM3_AGE = [1.60, 27.60, 24.60, 13.00, 16.00, 17.20];
+
+  const GENDER_CATS = ['남', '여'];
+  const REAL_GENDER = [46.80, 53.20];
+  const SIM1_GENDER = [46.40, 53.60];
+  const SIM2_GENDER = [51.60, 48.40];
+  const SIM3_GENDER = [47.40, 52.60];
+
+  const TIME_CATS = ['00-06', '06-11', '11-14', '14-17', '17-21', '21-24'];
+  const REAL_TIME = [16.98, 19.53, 16.21, 16.52, 19.12, 11.63];
+  const SIM1_TIME = [0, 0, 45.00, 24.80, 29.80, 0.40];
+  const SIM2_TIME = [0, 0, 56.60, 17.20, 23.20, 3.00];
+  const SIM3_TIME = [0, 0.40, 53.60, 14.60, 25.60, 5.80];
+
+  const DAY_CATS = ['월', '화', '수', '목', '금', '토', '일'];
+  const REAL_DAY = [15.22, 15.58, 15.85, 15.48, 14.79, 11.68, 11.40];
+  const SIM1_DAY = [0, 1.00, 0.40, 0, 12.20, 74.00, 12.40];
+  const SIM2_DAY = [0, 1.20, 0, 0.40, 11.60, 82.80, 4.00];
+  const SIM3_DAY = [0.20, 1.80, 0.40, 0.60, 17.60, 76.80, 2.00];
+
+  const seriesSim1 = function (v) { return { label: '시뮬1', colorVar: '--s-1', values: v }; };
+  const seriesSim2 = function (v) { return { label: '시뮬2', colorVar: '--s-2', values: v }; };
+  const seriesSim3 = function (v) { return { label: '시뮬3', colorVar: '--s-3', values: v }; };
+
+  function realSeries(v) { return { label: '실제', colorVar: '--s-real', values: v }; }
+
+  // Overview chart: 4 mini distributions side-by-side is complex; instead show one combined
+  // "실제만" chart summarizing all four axes as separate small groups isn't directly comparable
+  // (different units/categories) -> render as 4 stacked mini bar rows using time distribution style.
+  (function realOverview() {
+    const el = document.getElementById('chart-real-overview');
+    const blocks = [
+      { title: '연령대', cats: AGE_CATS, vals: REAL_AGE },
+      { title: '성별', cats: GENDER_CATS, vals: REAL_GENDER },
+      { title: '시간대', cats: TIME_CATS, vals: REAL_TIME },
+      { title: '요일', cats: DAY_CATS, vals: REAL_DAY }
+    ];
+    let html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:22px;">';
+    blocks.forEach(function (b, idx) {
+      html += '<div id="ro-' + idx + '"></div>';
+    });
+    html += '</div>';
+    el.innerHTML = html;
+    blocks.forEach(function (b, idx) {
+      const sub = document.createElement('div');
+      sub.innerHTML = '<p style="font-size:11.5px;color:var(--ink-muted);margin:0 0 6px;font-weight:700;">' + b.title + '</p><div id="ro-chart-' + idx + '"></div>';
+      document.getElementById('ro-' + idx).appendChild(sub);
+      groupedBar('ro-chart-' + idx, b.cats, [{ label: '실제', colorVar: '--s-real', values: b.vals }], { height: 170, legend: false, directLabels: true });
+    });
+  })();
+
+  groupedBar('chart-mae', ['연령대', '성별', '시간대', '요일'], [
+    { label: '시뮬1', colorVar: '--s-1', values: [3.66, 0.4, 15.92, 18.09] },
+    { label: '시뮬2', colorVar: '--s-2', values: [4.47, 4.8, 15.05, 20.32] },
+    { label: '시뮬3', colorVar: '--s-3', values: [4.41, 0.6, 14.62, 19.49] }
+  ], { unit: '%p', aria: '지표별 MAE 비교' });
+
+  groupedBar('chart-age', AGE_CATS, [
+    realSeries(REAL_AGE), seriesSim1(SIM1_AGE), seriesSim2(SIM2_AGE), seriesSim3(SIM3_AGE)
+  ], { height: 280 });
+  fillTable('tbl-age', AGE_CATS, { 실제: REAL_AGE, 시뮬1: SIM1_AGE, 시뮬2: SIM2_AGE, 시뮬3: SIM3_AGE });
+
+  groupedBar('chart-gender', GENDER_CATS, [
+    realSeries(REAL_GENDER), seriesSim1(SIM1_GENDER), seriesSim2(SIM2_GENDER), seriesSim3(SIM3_GENDER)
+  ], { height: 220 });
+  fillTable('tbl-gender', GENDER_CATS, { 실제: REAL_GENDER, 시뮬1: SIM1_GENDER, 시뮬2: SIM2_GENDER, 시뮬3: SIM3_GENDER });
+
+  groupedBar('chart-time', TIME_CATS, [
+    realSeries(REAL_TIME), seriesSim1(SIM1_TIME), seriesSim2(SIM2_TIME), seriesSim3(SIM3_TIME)
+  ], { height: 280 });
+  fillTable('tbl-time', TIME_CATS, { 실제: REAL_TIME, 시뮬1: SIM1_TIME, 시뮬2: SIM2_TIME, 시뮬3: SIM3_TIME });
+
+  groupedBar('chart-day', DAY_CATS, [
+    realSeries(REAL_DAY), seriesSim1(SIM1_DAY), seriesSim2(SIM2_DAY), seriesSim3(SIM3_DAY)
+  ], { height: 280 });
+  fillTable('tbl-day', DAY_CATS, { 실제: REAL_DAY, 시뮬1: SIM1_DAY, 시뮬2: SIM2_DAY, 시뮬3: SIM3_DAY });
+
+  // 10대 정규화
+  groupedBar('chart-teen', ['시뮬1', '시뮬2', '시뮬3'], [
+    { label: '원본(10대 포함)', colorVar: '--s-1', values: [3.66, 4.47, 4.41] },
+    { label: '10대 제외 정규화', colorVar: '--s-4', values: [3.98, 5.16, 4.70] }
+  ], { height: 240, unit: '%p' });
+
+  // 4-1 직업별 내부 비교
+  groupedBar('chart-occ-internal', ['판매·상인·자영업 (n=22)', '그 외 직업군 (n=478)'], [
+    { label: '토요일 비중', colorVar: '--s-2', values: [59.1, 77.6] }
+  ], { height: 220, refLine: 11.68, refLabel: '실제 11.7%', legend: false, unit: '%' });
+
+  // 4-2 표현 대조실험
+  const wordingLabels = ['방문할지\n(기존)', '들를 일이\n있을지', '가서 물건 사거나\n볼일을 볼지', '이용할지', '갈지'];
+  const wordingSat = [83.3, 76.4, 75.0, 76.1, 71.4];
+  groupedBar('chart-wording', wordingLabels, [
+    { label: '토요일 비중', colorVar: '--s-3', values: wordingSat }
+  ], { height: 300, refLine: 11.68, refLabel: '실제 11.7%', legend: false, unit: '%' });
+
+  (function () {
+    const tbody = document.getElementById('tbl-wording');
+    const rows = [
+      ['방문할지 (기존)', 16.0, 12.70, 21.01, 83.3],
+      ['들를 일이 있을지', 18.3, 13.62, 20.49, 76.4],
+      ['가서 물건을 사거나 볼일을 볼지', 12.0, 14.15, 20.21, 75.0],
+      ['이용할지', 22.3, 14.06, 19.30, 76.1],
+      ['갈지', 14.0, 12.92, 18.29, 71.4]
+    ];
+    tbody.innerHTML = rows.map(function (r) {
+      return '<tr' + (r[0] === '갈지' ? ' class="highlight"' : '') + '><td>' + r[0] + '</td><td>' + r[1].toFixed(1) + '%</td><td>' + r[2].toFixed(2) + '</td><td>' + r[3].toFixed(2) + '</td><td>' + r[4].toFixed(1) + '%</td></tr>';
+    }).join('');
+  })();
+
+  // 4-3 직업군 필터
+  groupedBar('chart-occ-filter', ['시뮬3 (일반 인구)', '패션 직업군'], [
+    { label: '토요일 비중', colorVar: '--s-1', values: [76.8, 64.74] }
+  ], { height: 220, refLine: 11.68, refLabel: '실제 11.7%', legend: false, unit: '%' });
+
+  groupedBar('chart-occ-mae-day', ['일반 인구', '패션 직업군'], [
+    { label: '요일 MAE', colorVar: '--s-1', values: [19.49, 17.89] }
+  ], { height: 200, legend: false, unit: '%p' });
+
+  groupedBar('chart-occ-mae-time', ['일반 인구', '패션 직업군'], [
+    { label: '시간대 MAE', colorVar: '--s-2', values: [14.62, 12.63] }
+  ], { height: 200, legend: false, unit: '%p' });
+
+})();
+</script>

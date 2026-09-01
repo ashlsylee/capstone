@@ -1,0 +1,7 @@
+openai
+python-dotenv
+pandas
+pyarrow
+openpyxl
+huggingface_hub
+fsspec

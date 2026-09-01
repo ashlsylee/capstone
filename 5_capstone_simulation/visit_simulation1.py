@@ -1,0 +1,211 @@
+"""
+시뮬레이션 1 — 기본 정보만 (조정 없음).
+
+nvidia/Nemotron-Personas-Korea 페르소나 풀(100만 명, 나이·성별·직업·거주지·취미성향
+포함)에서 무작위로 뽑아 batch-size명씩 묶어 OpenAI에게 "이 상권을 방문할지"를 물어본다.
+상권 설명은 이름·위치·업종 구성 같은 '이곳이 어떤 장소인지'에 대한 최소한의 사실 정보만
+제공하고(운영시간·낮밤시장 구조 같은 추가 정보는 시뮬레이션 2에서 다룸), 방문(Y) 응답이
+target(기본 500)명 채워지면 종료한다.
+
+실행 전 준비:
+    pip install -r requirements.txt
+    .env.example -> .env 로 복사 후 OPENAI_API_KEY 채우기
+    python prepare_real_data.py   (data/real_distribution.json 생성, 최초 1회)
+
+실행:
+    python visit_simulation1.py --target 500 --max-agents 5000 --batch-size 25
+"""
+import argparse
+import json
+import os
+import random
+import re
+from pathlib import Path
+
+import pandas as pd
+from dotenv import load_dotenv
+
+BASE_DIR = Path(__file__).resolve().parent
+PERSONA_PATH = BASE_DIR / "data" / "nemotron_personas_korea_demo.parquet"
+REAL_DIST_PATH = BASE_DIR / "data" / "real_distribution.json"
+OUTPUT_DIR = BASE_DIR / "outputs"
+RESULT_NAME = "visit_simulation1_results.csv"
+
+load_dotenv(BASE_DIR / ".env")
+
+TIME_SLOTS = ["00-06", "06-11", "11-14", "14-17", "17-21", "21-24"]
+DAYS = ["월", "화", "수", "목", "금", "토", "일"]
+SEED = 42
+
+
+def build_district_context() -> str:
+    """상권 설명은 이번에 확보한 실제 데이터(추정유동인구·점포-상권)에 있는 내용만으로 구성한다.
+    몰 이름·행정동 세부 등 데이터에 없는 배경 지식은 넣지 않는다(시뮬레이션 1: 기본 정보만)."""
+    dist = json.loads(REAL_DIST_PATH.read_text(encoding="utf-8"))
+    stores = dist["stores"]["store_counts"]
+    return (
+        f"{dist['district_name']}(상권 코드 {dist['district_code']})이라는 상권입니다. "
+        f"이 상권 안의 매장 구성은 마트 {stores['마트']}개, 백화점 {stores['백화점']}개, "
+        f"편의점 {stores['편의점']}개, 카페 {stores['카페']}개, 음식점 {stores['음식점']}개입니다."
+    )
+
+
+SYSTEM_PROMPT_TEMPLATE = """당신은 상권 방문 시뮬레이터입니다. 아래는 대상 상권 정보입니다.
+
+{district_context}
+
+위 상권 정보와 아래 주어지는 각 인물의 특성을 함께 고려해, 그 인물이 실제로 이 사람이라면
+향후 30일 내 이 상권을 방문할지(Y/N) 판단하세요. 방문한다면({{"v":"Y"}}) 주로 몇 시경 방문할지와
+무슨 요일에 방문할지도 판단하세요:
+- 시간대는 아래 6개 구간 중 하나로: {time_slots}
+- 요일은 아래 7개 중 하나로: {days}
+방문하지 않으면({{"v":"N"}}) 시간대·요일은 비워도 됩니다.
+
+※ 상권 정보는 '이곳이 어떤 장소인지'에 대한 설명일 뿐입니다. 인물의 성향(나이·직업·거주지 등)에
+비추어 방문 여부와 시간대·요일을 스스로 추론하세요. 실제 방문객의 연령·성별·시간대·요일별
+분포나 유동인구 통계를 맞추려고 하지 마세요. 각 인물은 서로 독립적으로 판단하세요.
+
+반드시 아래 형식의 JSON 배열만 출력하세요. 다른 설명·마크다운 없이 배열만:
+[{{"i":0,"v":"Y","t":"17-21","d":"토"}},{{"i":1,"v":"N"}}, ...]
+"""
+
+
+def age_to_group(age: int) -> str:
+    if age < 20:
+        return "10대"
+    if age < 30:
+        return "20대"
+    if age < 40:
+        return "30대"
+    if age < 50:
+        return "40대"
+    if age < 60:
+        return "50대"
+    return "60대+"
+
+
+def format_persona_line(i: int, row) -> str:
+    return (
+        f"{i}) 나이:{int(row.age)} 성별:{row.sex} 직업:{row.occupation} "
+        f"거주지:{row.district} 취미·성향:{row.hobbies_and_interests}"
+    )
+
+
+def safe_parse_batch(text: str, batch_size: int) -> list:
+    match = re.search(r"\[.*\]", text, re.DOTALL)
+    if match:
+        try:
+            data = json.loads(match.group())
+            if isinstance(data, list):
+                return data
+        except json.JSONDecodeError:
+            pass
+    return [{"i": i, "v": "N"} for i in range(batch_size)]
+
+
+def run(target: int, max_agents: int, batch_size: int, model: str):
+    from openai import OpenAI
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY가 설정되어 있지 않습니다 (.env 또는 환경변수).")
+    client = OpenAI(api_key=api_key)
+
+    if not REAL_DIST_PATH.exists():
+        raise RuntimeError("data/real_distribution.json이 없습니다. 먼저 prepare_real_data.py를 실행하세요.")
+
+    system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
+        district_context=build_district_context(),
+        time_slots=", ".join(TIME_SLOTS),
+        days=", ".join(DAYS),
+    )
+
+    personas = pd.read_parquet(PERSONA_PATH)
+    idx = list(range(len(personas)))
+    random.seed(SEED)
+    random.shuffle(idx)
+
+    out_path = OUTPUT_DIR / RESULT_NAME
+    prior_df = None
+    if out_path.exists():
+        prior_df = pd.read_csv(out_path)
+        print(f"기존 결과 발견: {len(prior_df):,}명 이미 질의됨 (이어서 진행)")
+
+    results = []
+    accepted = int((prior_df["visit"] == True).sum()) if prior_df is not None else 0
+    queried = len(prior_df) if prior_df is not None else 0
+    cursor = queried  # 셔플 순서 고정(seed=42) -> 이미 처리한 만큼 건너뜀
+    calls = 0
+
+    while accepted < target and queried < max_agents and cursor < len(idx):
+        batch_idx = idx[cursor: cursor + batch_size]
+        cursor += batch_size
+        batch = personas.iloc[batch_idx].reset_index(drop=True)
+
+        lines = "\n".join(format_persona_line(i, row) for i, row in batch.iterrows())
+        response = client.chat.completions.create(
+            model=model,
+            max_completion_tokens=800,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": lines},
+            ],
+        )
+        calls += 1
+        decisions = safe_parse_batch(response.choices[0].message.content or "", len(batch))
+        decision_map = {d.get("i"): d for d in decisions if isinstance(d, dict)}
+
+        for i, row in batch.iterrows():
+            d = decision_map.get(i, {"v": "N"})
+            visit = str(d.get("v", "N")).upper().startswith("Y")
+            record = {
+                "uuid": row.uuid,
+                "sex": row.sex,
+                "age": int(row.age),
+                "age_group": age_to_group(int(row.age)),
+                "occupation": row.occupation,
+                "district": row.district,
+                "visit": visit,
+                "time_slot": d.get("t") if visit else None,
+                "day_of_week": d.get("d") if visit else None,
+            }
+            results.append(record)
+            if visit:
+                accepted += 1
+        queried += len(batch)
+        print(f"[batch {calls}] queried={queried} accepted={accepted}/{target} "
+              f"(수락률 {accepted/queried:.1%})")
+
+        # target에 도달한 배치 안에서, target을 넘겨 채운 초과분은 그대로 기록에 남긴다
+        # (마지막 배치를 통째로 저장해 시간대 분포가 배치 단위로 잘리지 않게 함)
+
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    new_df = pd.DataFrame(results)
+    combined = pd.concat([prior_df, new_df], ignore_index=True) if prior_df is not None else new_df
+    combined.to_csv(out_path, index=False, encoding="utf-8-sig")
+
+    print(f"\n=== 시뮬레이션 1 종료 ===")
+    print(f"에이전트 풀(전체): {len(personas):,}")
+    print(f"이번 실행에서 새로 호출: {calls}회 ({len(new_df):,}명)")
+    print(f"누적 질의한 에이전트 수: {queried:,}")
+    print(f"누적 채워진 방문자 수: {accepted:,}")
+    print(f"누적 수락률: {accepted/queried:.1%}")
+    if accepted < target:
+        print(f"※ target({target})에 도달하지 못하고 max-agents({max_agents}) 상한으로 종료됨. "
+              f"--max-agents를 늘려 재실행하세요 (기존 결과에 이어서 진행됨).")
+    print(f"결과 저장(누적): {out_path}")
+    return combined, queried, accepted, calls
+
+
+def main():
+    parser = argparse.ArgumentParser(description="동대문패션타운 방문 시뮬레이션 1 (기본 정보만)")
+    parser.add_argument("--target", type=int, default=500, help="채우고자 하는 방문자(수락) 수")
+    parser.add_argument("--max-agents", type=int, default=5000, help="안전 상한 (예산 보호용)")
+    parser.add_argument("--batch-size", type=int, default=25, help="호출당 페르소나 수")
+    parser.add_argument("--model", default="gpt-5.4-mini")
+    args = parser.parse_args()
+    run(args.target, args.max_agents, args.batch_size, args.model)
+
+
+if __name__ == "__main__":
+    main()
