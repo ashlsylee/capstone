@@ -5,6 +5,8 @@
 > 실제 지도·도로망·상권 경계 위에서 LLM 페르소나 에이전트 993명이 지하철 출구와 도로로 들어와 목적지로 걷고,
 > 장 볼 일이 있으면 슈퍼마켓에 들른다. 후보지 5곳에 점포를 세웠을 때의 방문(결제)수와 매출을
 > 서울시 실제 매출 데이터로 환산해 비교했다.
+>
+> **▶ 시뮬레이션 바로 보기: https://ashlsylee.github.io/capstone/7_store_entry_simulation/district_map.html**
 
 ![시뮬레이션 화면](docs/simulation.gif)
 
@@ -12,13 +14,13 @@
 
 | 보고 싶은 것 | 위치 |
 |---|---|
-| **시뮬레이션 실행 (지도 + 에이전트 이동)** | [`district_map.html`](district_map.html) — 저장소를 내려받아 브라우저로 열기 (같은 폴더의 `assets/` 필요, 설치 불필요) |
+| **시뮬레이션 실행 (지도 + 에이전트 이동)** | **[웹에서 바로 보기](https://ashlsylee.github.io/capstone/7_store_entry_simulation/district_map.html)** · 파일: [`district_map.html`](district_map.html) |
 | **진출 판정·후보지별 방문수·매출** | [`outputs/entry_evaluation.md`](outputs/entry_evaluation.md) |
 | **위치 선정 근거 · 주요 타겟 고객 · 맞춤 마케팅** | [`outputs/entry_report.md`](outputs/entry_report.md) (LLM 작성, 판정은 바꾸지 않음) |
 | 결론이 LLM 판단·가정에 얼마나 기대는가 (대조실험) | [`outputs/ablation_entry.md`](outputs/ablation_entry.md) |
 | 롯데 미입점 상태(BASE)와 비교 | 이 README [아래](#롯데-미입점-상태base와-비교) · [`outputs/entry_evaluation.md`](outputs/entry_evaluation.md) |
 
-GitHub 화면에서 `district_map.html`을 열면 코드만 보인다. 로컬에서 열거나, 저장소 Settings → Pages를 켜면 웹으로 볼 수 있다.
+위 '웹에서 바로 보기' 링크(GitHub Pages)로 설치 없이 열린다. GitHub 파일 화면에서 `district_map.html`을 누르면 코드만 보이니, 링크로 열거나 저장소를 내려받아 브라우저로 연다(같은 폴더의 `assets/` 필요).
 
 화면에서 할 수 있는 것: 시나리오(BASE·C1-C5)와 요일 고르기, 재생 속도(1×·3×·8×), "장보기 고객만" 보기,
 점포·에이전트에 마우스를 올려 페르소나·목적·고른 점포 확인, 오른쪽 표의 후보지를 눌러 시나리오 전환.
