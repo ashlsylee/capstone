@@ -22,7 +22,7 @@
 
 진출 판정 기준 (실행 전에 정함):
   후보지별로 R번 반복 중 '신규점 연매출 ≥ 상권 슈퍼마켓 점포당 평균 연매출(2025)'인 비율
-  - Go: 70% 이상 / 조건부: 40~70% / No-Go: 40% 미만
+  - Go: 70% 이상 / 조건부: 40-70% / No-Go: 40% 미만
   상권 진출 판정 = 가장 좋은 후보지의 판정
 
 실행:
@@ -46,7 +46,7 @@ from common import (AGES, BASELINE, DAYS, MARKET_PATH, NEW_BRAND, OUTPUT_DIR, TI
 SEED = 42
 N_RUNS = 500
 BASE_PARAMS = {"lambda_m": 200.0, "alpha_new": 1.0, "entrance_decay_m": 500.0, "virtual_layout": "uniform"}
-# 범위는 기본값을 중심으로 (로그) 대칭: λ 200m의 0.6~1.75배, 매력도 1.0의 1/1.5~1.5배(로그 균등), 입구 감쇠 500m의 0.6~1.6배
+# 범위는 기본값을 중심으로 (로그) 대칭: λ 200m의 0.6-1.75배, 매력도 1.0의 1/1.5-1.5배(로그 균등), 입구 감쇠 500m의 0.6-1.6배
 RANGES = {"lambda_m": (120.0, 350.0), "alpha_new": (1 / 1.5, 1.5), "entrance_decay_m": (300.0, 800.0),
           "weight_jitter": (0.5, 1.5)}
 GO_SHARE, COND_SHARE = 0.7, 0.4
@@ -198,7 +198,7 @@ def write_markdown(ev: dict, path):
     for c in ev["candidates"]:
         b, r = c["base"], c["robust"]
         L.append(f"| {c['id']} {c['name']} | {b['annual_transactions']:,} | {fmt_won(b['annual_sales'])} "
-                 f"({b['ratio_to_avg'] * 100:.0f}%) | {fmt_won(r['p5'])}~{fmt_won(r['p95'])} | "
+                 f"({b['ratio_to_avg'] * 100:.0f}%) | {fmt_won(r['p5'])}-{fmt_won(r['p95'])} | "
                  f"{r['share_above_avg'] * 100:.0f}% | {r['rank1_share'] * 100:.0f}% | **{c['verdict']}** |")
     L += ["", f"**상권 진출 판정: {ev['district_verdict']}** (최적 후보지 {ev['best_candidate']})", "",
           "## 롯데 미입점(BASE) 대비 변화", "",
