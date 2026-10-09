@@ -1,0 +1,621 @@
+{
+ "source": "OpenStreetMap (Nominatim 검색, 2026-10-07 수집) © OpenStreetMap contributors, ODbL",
+ "places": [
+  {
+   "osm_id": 368867579,
+   "name": "제일평화시장",
+   "lat": 37.568485,
+   "lng": 127.011278,
+   "class": "shop",
+   "type": "supermarket"
+  },
+  {
+   "osm_id": 358283250,
+   "name": "헬로apm",
+   "lat": 37.5674295,
+   "lng": 127.0080591,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 626423078,
+   "name": "신평화시장",
+   "lat": 37.5694579,
+   "lng": 127.0110619,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 3884093,
+   "name": "신당동",
+   "lat": 37.5651969,
+   "lng": 127.01322,
+   "class": "boundary",
+   "type": "administrative"
+  },
+  {
+   "osm_id": 218773868,
+   "name": "퇴계로",
+   "lat": 37.5638382,
+   "lng": 127.0054096,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 218684411,
+   "name": "퇴계로",
+   "lat": 37.565645,
+   "lng": 127.0189048,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 180368918,
+   "name": "퇴계로",
+   "lat": 37.5644411,
+   "lng": 127.008818,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 1455512070,
+   "name": "퇴계로",
+   "lat": 37.5633499,
+   "lng": 127.0032101,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 578313748,
+   "name": "퇴계로",
+   "lat": 37.5648359,
+   "lng": 127.0111575,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 765957003,
+   "name": "흥인지문",
+   "lat": 37.5711123,
+   "lng": 127.0096063,
+   "class": "historic",
+   "type": "city_gate"
+  },
+  {
+   "osm_id": 415153979,
+   "name": "을지로6가",
+   "lat": 37.56719,
+   "lng": 127.00646,
+   "class": "place",
+   "type": "quarter"
+  },
+  {
+   "osm_id": 8329074,
+   "name": "을지로6가",
+   "lat": 37.5675057,
+   "lng": 127.0065992,
+   "class": "boundary",
+   "type": "legal"
+  },
+  {
+   "osm_id": 357833282,
+   "name": "을지로6가",
+   "lat": 37.56635,
+   "lng": 127.00636,
+   "class": "highway",
+   "type": "bus_stop"
+  },
+  {
+   "osm_id": 400847811,
+   "name": "청평화시장",
+   "lat": 37.5694705,
+   "lng": 127.0149654,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 482140281,
+   "name": "마장로",
+   "lat": 37.5683514,
+   "lng": 127.0197496,
+   "class": "highway",
+   "type": "secondary"
+  },
+  {
+   "osm_id": 913811576,
+   "name": "마장로",
+   "lat": 37.5679027,
+   "lng": 127.0115339,
+   "class": "highway",
+   "type": "tertiary"
+  },
+  {
+   "osm_id": 911522751,
+   "name": "마장로",
+   "lat": 37.56804,
+   "lng": 127.0140788,
+   "class": "highway",
+   "type": "tertiary"
+  },
+  {
+   "osm_id": 420078498,
+   "name": "마장로",
+   "lat": 37.5688038,
+   "lng": 127.0189156,
+   "class": "highway",
+   "type": "residential"
+  },
+  {
+   "osm_id": 381807700,
+   "name": "마장로",
+   "lat": 37.5676563,
+   "lng": 127.0168507,
+   "class": "highway",
+   "type": "residential"
+  },
+  {
+   "osm_id": 348649722,
+   "name": "밀리오레",
+   "lat": 37.5680237,
+   "lng": 127.0084766,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 12150835901,
+   "name": "bao guest house",
+   "lat": 37.5647565,
+   "lng": 127.0023045,
+   "class": "tourism",
+   "type": "guest_house"
+  },
+  {
+   "osm_id": 1128463652,
+   "name": "JUST STAY",
+   "lat": 37.5662414,
+   "lng": 127.0049845,
+   "class": "tourism",
+   "type": "guest_house"
+  },
+  {
+   "osm_id": 12744482885,
+   "name": "HAH Guesthouse",
+   "lat": 37.5715687,
+   "lng": 127.0080307,
+   "class": "tourism",
+   "type": "guest_house"
+  },
+  {
+   "osm_id": 628936822,
+   "name": "평화시장",
+   "lat": 37.5694266,
+   "lng": 127.0080692,
+   "class": "building",
+   "type": "retail"
+  },
+  {
+   "osm_id": 759409643,
+   "name": "평화시장",
+   "lat": 37.5693742,
+   "lng": 127.0045614,
+   "class": "building",
+   "type": "retail"
+  },
+  {
+   "osm_id": 368867533,
+   "name": "평화시장",
+   "lat": 37.56927,
+   "lng": 127.005992,
+   "class": "shop",
+   "type": "supermarket"
+  },
+  {
+   "osm_id": 13045404511,
+   "name": "동대문역사문화공원",
+   "lat": 37.5642774,
+   "lng": 127.0071354,
+   "class": "railway",
+   "type": "station"
+  },
+  {
+   "osm_id": 13045404512,
+   "name": "동대문역사문화공원",
+   "lat": 37.5658762,
+   "lng": 127.0081569,
+   "class": "railway",
+   "type": "station"
+  },
+  {
+   "osm_id": 5772552255,
+   "name": "동대문역사문화공원",
+   "lat": 37.5652615,
+   "lng": 127.0081233,
+   "class": "railway",
+   "type": "station"
+  },
+  {
+   "osm_id": 10647068,
+   "name": "동대문디자인플라자",
+   "lat": 37.5670686,
+   "lng": 127.009899,
+   "class": "building",
+   "type": "public"
+  },
+  {
+   "osm_id": 3884088,
+   "name": "광희동",
+   "lat": 37.5655625,
+   "lng": 127.0071401,
+   "class": "boundary",
+   "type": "administrative"
+  },
+  {
+   "osm_id": 5812233465,
+   "name": "동대문",
+   "lat": 37.5718616,
+   "lng": 127.0114887,
+   "class": "railway",
+   "type": "station"
+  },
+  {
+   "osm_id": 7288910987,
+   "name": "청계천 북쪽 가산",
+   "lat": 37.5698763,
+   "lng": 127.0053455,
+   "class": "natural",
+   "type": "peak"
+  },
+  {
+   "osm_id": 218771978,
+   "name": "청계천로",
+   "lat": 37.5698015,
+   "lng": 127.0056664,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 1455526427,
+   "name": "청계천로",
+   "lat": 37.5694983,
+   "lng": 127.0060972,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 1305791485,
+   "name": "청계천로",
+   "lat": 37.5695997,
+   "lng": 127.0111098,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 348659730,
+   "name": "청계천로",
+   "lat": 37.5684637,
+   "lng": 127.0066321,
+   "class": "highway",
+   "type": "unclassified"
+  },
+  {
+   "osm_id": 400847812,
+   "name": "동평화시장",
+   "lat": 37.5694503,
+   "lng": 127.0132574,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 358098018,
+   "name": "동대문종합시장",
+   "lat": 37.5703904,
+   "lng": 127.0077026,
+   "class": "amenity",
+   "type": "marketplace"
+  },
+  {
+   "osm_id": 357963279,
+   "name": "동대문종합시장",
+   "lat": 37.5711848,
+   "lng": 127.0049959,
+   "class": "highway",
+   "type": "bus_stop"
+  },
+  {
+   "osm_id": 37403503,
+   "name": "장충단로",
+   "lat": 37.5677274,
+   "lng": 127.0090974,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 218923171,
+   "name": "장충단로",
+   "lat": 37.5650916,
+   "lng": 127.0074419,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 348657487,
+   "name": "장충단로",
+   "lat": 37.56711,
+   "lng": 127.0077419,
+   "class": "highway",
+   "type": "unclassified"
+  },
+  {
+   "osm_id": 773066535,
+   "name": "장충단로",
+   "lat": 37.5663413,
+   "lng": 127.0078837,
+   "class": "highway",
+   "type": "primary"
+  },
+  {
+   "osm_id": 1099004169,
+   "name": "장충단로",
+   "lat": 37.5654209,
+   "lng": 127.0070388,
+   "class": "highway",
+   "type": "residential"
+  },
+  {
+   "osm_id": 10755246,
+   "name": "두타몰",
+   "lat": 37.5687628,
+   "lng": 127.0087284,
+   "class": "building",
+   "type": "commercial"
+  },
+  {
+   "osm_id": 340373569,
+   "name": "디오트 패션도매상가",
+   "lat": 37.5691648,
+   "lng": 127.0149882,
+   "class": "amenity",
+   "type": "marketplace"
+  },
+  {
+   "osm_id": 358284628,
+   "name": "굿모닝시티",
+   "lat": 37.5667161,
+   "lng": 127.0075377,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 400847801,
+   "name": "에이피엠 플레이스",
+   "lat": 37.5653012,
+   "lng": 127.0084064,
+   "class": "shop",
+   "type": "mall"
+  },
+  {
+   "osm_id": 4392445391,
+   "name": "동대문역사문화공원역 9번출구 앞",
+   "lat": 37.5653305,
+   "lng": 127.007843,
+   "class": "amenity",
+   "type": "bicycle_rental"
+  },
+  {
+   "osm_id": 12372983757,
+   "name": "동대문역사문화공원역 1번출구 뒤편",
+   "lat": 37.5662994,
+   "lng": 127.0084915,
+   "class": "amenity",
+   "type": "bicycle_rental"
+  },
+  {
+   "osm_id": 12372953692,
+   "name": "동대문역사문화공원역 5번출구",
+   "lat": 37.5643082,
+   "lng": 127.0064774,
+   "class": "amenity",
+   "type": "bicycle_rental"
+  },
+  {
+   "osm_id": 357868774,
+   "name": "광희동.동대문역사문화공원역",
+   "lat": 37.5654617,
+   "lng": 127.0092474,
+   "class": "highway",
+   "type": "bus_stop"
+  },
+  {
+   "osm_id": 358284634,
+   "name": "ECONOMY HOTEL",
+   "lat": 37.5669567,
+   "lng": 127.0064097,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 4946726722,
+   "name": "Hotel Seul",
+   "lat": 37.5715432,
+   "lng": 127.0034145,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 12150835801,
+   "name": "glory inn",
+   "lat": 37.5651368,
+   "lng": 127.0022647,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 13465475294,
+   "name": "Roaming TIger Hostel",
+   "lat": 37.564014,
+   "lng": 127.0152803,
+   "class": "tourism",
+   "type": "hostel"
+  },
+  {
+   "osm_id": 4264095701,
+   "name": "Kimchee Dongdaemun Guesthouse",
+   "lat": 37.5716407,
+   "lng": 127.0033589,
+   "class": "tourism",
+   "type": "hostel"
+  },
+  {
+   "osm_id": 6400294785,
+   "name": "Travelodge Dongdaemun",
+   "lat": 37.5661969,
+   "lng": 127.0021505,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 4686187514,
+   "name": "Air Hostel",
+   "lat": 37.5717169,
+   "lng": 127.0035661,
+   "class": "tourism",
+   "type": "hostel"
+  },
+  {
+   "osm_id": 4946726723,
+   "name": "Just4u Guesthouse",
+   "lat": 37.5714413,
+   "lng": 127.0073864,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 1012924857,
+   "name": "노보텔 앰배서더 서울 동대문",
+   "lat": 37.5662957,
+   "lng": 127.0043937,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 358098017,
+   "name": "JW 메리어트 동대문 스퀘어",
+   "lat": 37.5703683,
+   "lng": 127.0088222,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 1268842802,
+   "name": "Ramada",
+   "lat": 37.5659364,
+   "lng": 127.0027835,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 358292303,
+   "name": "이비스버젯 앰배서더",
+   "lat": 37.564141,
+   "lng": 127.0088137,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 358285905,
+   "name": "에비뉴모텔",
+   "lat": 37.5651674,
+   "lng": 127.0062351,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 5516872729,
+   "name": "호텔 스카이파크 킹스타운 동대문",
+   "lat": 37.5687926,
+   "lng": 127.0077601,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 4946726821,
+   "name": "gjj",
+   "lat": 37.5699369,
+   "lng": 127.0025038,
+   "class": "tourism",
+   "type": "hostel"
+  },
+  {
+   "osm_id": 368951375,
+   "name": "영빈호텔",
+   "lat": 37.563065,
+   "lng": 127.00544,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 368951411,
+   "name": "세화호텔",
+   "lat": 37.571999,
+   "lng": 127.006974,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 11930286188,
+   "name": "호텔가온골든파크",
+   "lat": 37.5709168,
+   "lng": 127.0146473,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 368951470,
+   "name": "동대문호텔",
+   "lat": 37.5708959,
+   "lng": 127.0103087,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 368951212,
+   "name": "투호텔",
+   "lat": 37.5718801,
+   "lng": 127.0042599,
+   "class": "tourism",
+   "type": "hotel"
+  },
+  {
+   "osm_id": 13851760115,
+   "name": "라온밥상 현대시티아울렛 동대문점",
+   "lat": 37.5686986,
+   "lng": 127.0076666,
+   "class": "amenity",
+   "type": "restaurant"
+  },
+  {
+   "osm_id": 13851760114,
+   "name": "온정 현대시티아울렛 동대문점",
+   "lat": 37.5686986,
+   "lng": 127.0076666,
+   "class": "amenity",
+   "type": "restaurant"
+  },
+  {
+   "osm_id": 13851760127,
+   "name": "JVL 부대찌개 현대시티아울렛 동대문점",
+   "lat": 37.568643,
+   "lng": 127.0077325,
+   "class": "amenity",
+   "type": "restaurant"
+  },
+  {
+   "osm_id": 400847804,
+   "name": "벨포스트(BELPOST)",
+   "lat": 37.5680656,
+   "lng": 127.0119614,
+   "class": "shop",
+   "type": "mall"
+  }
+ ]
+}

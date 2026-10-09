@@ -1,0 +1,16 @@
+{
+  "zoom": 18,
+  "width": 3062,
+  "height": 1899,
+  "tile_x0": 223552.6653906489,
+  "tile_y0": 101511.39221193481,
+  "tile_x1": 223564.62549219554,
+  "tile_y1": 101518.80777289241,
+  "bounds": {
+    "west": 127.0028669,
+    "east": 127.0192916,
+    "south": 37.5632948,
+    "north": 37.5713668
+  },
+  "attribution": "© OpenStreetMap contributors"
+}

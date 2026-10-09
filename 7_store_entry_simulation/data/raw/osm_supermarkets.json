@@ -1,0 +1,195 @@
+{
+ "source": "OpenStreetMap (Nominatim 검색 'supermarket', 2026-10-08 수집) © OpenStreetMap contributors, ODbL",
+ "note": "exclude=true: 시장·상가 건물이 슈퍼마켓으로 잘못 등록된 경우. OSM에 등록된 곳만 있어 실제 점포 수보다 적다.",
+ "stores": [
+  {
+   "osm_id": 11953548812,
+   "name": "Imperia Foods",
+   "lat": 37.5654986,
+   "lng": 127.0066634,
+   "exclude": false
+  },
+  {
+   "osm_id": 13957670869,
+   "name": "원광상사",
+   "lat": 37.5721443,
+   "lng": 127.0039736,
+   "exclude": false
+  },
+  {
+   "osm_id": 13957728766,
+   "name": "우리마트",
+   "lat": 37.5724862,
+   "lng": 127.0108377,
+   "exclude": false
+  },
+  {
+   "osm_id": 13957728769,
+   "name": "하남아시안마트",
+   "lat": 37.5723006,
+   "lng": 127.0108359,
+   "exclude": false
+  },
+  {
+   "osm_id": 11012630340,
+   "name": "(이름 없음)",
+   "lat": 37.5657589,
+   "lng": 127.0060171,
+   "exclude": false
+  },
+  {
+   "osm_id": 368867498,
+   "name": "동화상가",
+   "lat": 37.5685438,
+   "lng": 127.0069277,
+   "exclude": true
+  },
+  {
+   "osm_id": 368867512,
+   "name": "넷시장",
+   "lat": 37.567376,
+   "lng": 127.002666,
+   "exclude": true
+  },
+  {
+   "osm_id": 368665505,
+   "name": "기성키친마트",
+   "lat": 37.566555,
+   "lng": 127.003628,
+   "exclude": false
+  },
+  {
+   "osm_id": 4751031121,
+   "name": "방산시장",
+   "lat": 37.5682136,
+   "lng": 127.0019321,
+   "exclude": true
+  },
+  {
+   "osm_id": 7557536834,
+   "name": "신당제일할인마트",
+   "lat": 37.5646186,
+   "lng": 127.0134625,
+   "exclude": false
+  },
+  {
+   "osm_id": 368867635,
+   "name": "만선수산체인사업부이호선중앙시장",
+   "lat": 37.56664,
+   "lng": 127.019159,
+   "exclude": true
+  },
+  {
+   "osm_id": 10112440417,
+   "name": "No Brand",
+   "lat": 37.5692311,
+   "lng": 127.0091795,
+   "exclude": false
+  },
+  {
+   "osm_id": 368867579,
+   "name": "제일평화시장",
+   "lat": 37.568485,
+   "lng": 127.011278,
+   "exclude": true
+  },
+  {
+   "osm_id": 10292564365,
+   "name": "미니마트",
+   "lat": 37.5702251,
+   "lng": 127.0160679,
+   "exclude": false
+  },
+  {
+   "osm_id": 7557537319,
+   "name": "썬마트",
+   "lat": 37.5645341,
+   "lng": 127.0146765,
+   "exclude": false
+  },
+  {
+   "osm_id": 8373302317,
+   "name": "정아식품",
+   "lat": 37.5707965,
+   "lng": 127.0139814,
+   "exclude": false
+  },
+  {
+   "osm_id": 8373308918,
+   "name": "신흥슈퍼",
+   "lat": 37.5708459,
+   "lng": 127.0149976,
+   "exclude": false
+  },
+  {
+   "osm_id": 368664695,
+   "name": "이지마트",
+   "lat": 37.562908,
+   "lng": 127.014713,
+   "exclude": false
+  },
+  {
+   "osm_id": 368867533,
+   "name": "평화시장",
+   "lat": 37.56927,
+   "lng": 127.005992,
+   "exclude": true
+  },
+  {
+   "osm_id": 368867448,
+   "name": "통일상가",
+   "lat": 37.5689604,
+   "lng": 127.0062331,
+   "exclude": true
+  },
+  {
+   "osm_id": 7557536868,
+   "name": "은혜마트",
+   "lat": 37.5637533,
+   "lng": 127.0172223,
+   "exclude": false
+  },
+  {
+   "osm_id": 368665778,
+   "name": "하임마트",
+   "lat": 37.565905,
+   "lng": 127.020697,
+   "exclude": false
+  },
+  {
+   "osm_id": 7557532722,
+   "name": "동묘식풍",
+   "lat": 37.5725129,
+   "lng": 127.019042,
+   "exclude": false
+  },
+  {
+   "osm_id": 368867413,
+   "name": "남평화상가",
+   "lat": 37.569175,
+   "lng": 127.010816,
+   "exclude": true
+  },
+  {
+   "osm_id": 13957728758,
+   "name": "베트남마트",
+   "lat": 37.5729667,
+   "lng": 127.0108127,
+   "exclude": false
+  },
+  {
+   "osm_id": 11012630339,
+   "name": "동대문마트",
+   "lat": 37.5659352,
+   "lng": 127.0058982,
+   "exclude": false
+  },
+  {
+   "osm_id": 7557536204,
+   "name": "한일유통",
+   "lat": 37.5714887,
+   "lng": 127.0185817,
+   "exclude": false
+  }
+ ]
+}

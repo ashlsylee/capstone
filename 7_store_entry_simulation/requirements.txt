@@ -1,0 +1,10 @@
+openai
+python-dotenv
+pandas
+pyarrow
+numpy
+shapely
+pillow
+huggingface_hub
+fsspec
+networkx

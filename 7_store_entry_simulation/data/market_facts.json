@@ -1,0 +1,223 @@
+{
+  "district_code": 3001493,
+  "district_name": "동대문패션타운 관광특구",
+  "period": "2025년 1~4분기 합계",
+  "source": {
+    "floating_population": "서울시 상권분석서비스(추정유동인구-상권) OA-15568, data.seoul.go.kr",
+    "sales": "서울시 상권분석서비스(추정매출-상권) OA-15572, data.seoul.go.kr",
+    "stores": "서울시 상권분석서비스(점포-상권) OA-15577, data.seoul.go.kr"
+  },
+  "floating_population": {
+    "total_2025": 13354514,
+    "quarterly": {
+      "20251": 3304504,
+      "20252": 3489708,
+      "20253": 3247753,
+      "20254": 3312549
+    },
+    "age_pct": {
+      "10대": 5.57,
+      "20대": 18.77,
+      "30대": 22.05,
+      "40대": 20.07,
+      "50대": 15.46,
+      "60대+": 18.08
+    },
+    "gender_pct": {
+      "남": 46.62,
+      "여": 53.38
+    },
+    "time_pct": {
+      "00-06": 17.3,
+      "06-11": 19.73,
+      "11-14": 15.84,
+      "14-17": 16.02,
+      "17-21": 19.25,
+      "21-24": 11.85
+    },
+    "day_pct": {
+      "월": 15.22,
+      "화": 15.57,
+      "수": 15.73,
+      "목": 15.85,
+      "금": 15.01,
+      "토": 11.48,
+      "일": 11.14
+    }
+  },
+  "target_industry": {
+    "industry": "슈퍼마켓",
+    "stores": 85.8,
+    "stores_by_quarter": {
+      "20251": 81,
+      "20252": 84,
+      "20253": 88,
+      "20254": 90
+    },
+    "franchise_stores_by_quarter": {
+      "20251": 10,
+      "20252": 10,
+      "20253": 12,
+      "20254": 10
+    },
+    "sales_amount_2025": 14271650456,
+    "transactions_2025": 2000851,
+    "avg_ticket": 7133,
+    "sales_per_store_2025": 166336252,
+    "transactions_per_store_2025": 23320,
+    "quarterly": {
+      "20251": {
+        "amount": 3303918462,
+        "transactions": 450895
+      },
+      "20252": {
+        "amount": 3779881820,
+        "transactions": 514773
+      },
+      "20253": {
+        "amount": 3595707390,
+        "transactions": 532843
+      },
+      "20254": {
+        "amount": 3592142784,
+        "transactions": 502340
+      }
+    },
+    "time": {
+      "00-06": {
+        "transactions": 400870,
+        "amount": 2608982497,
+        "tx_pct": 20.03,
+        "avg_ticket": 6508
+      },
+      "06-11": {
+        "transactions": 357473,
+        "amount": 2336150567,
+        "tx_pct": 17.87,
+        "avg_ticket": 6535
+      },
+      "11-14": {
+        "transactions": 237444,
+        "amount": 1843064923,
+        "tx_pct": 11.87,
+        "avg_ticket": 7762
+      },
+      "14-17": {
+        "transactions": 243752,
+        "amount": 1981284029,
+        "tx_pct": 12.18,
+        "avg_ticket": 8128
+      },
+      "17-21": {
+        "transactions": 443421,
+        "amount": 3378479768,
+        "tx_pct": 22.16,
+        "avg_ticket": 7619
+      },
+      "21-24": {
+        "transactions": 317891,
+        "amount": 2123688672,
+        "tx_pct": 15.89,
+        "avg_ticket": 6681
+      }
+    },
+    "day": {
+      "월": {
+        "transactions": 312328,
+        "amount": 2159591247,
+        "tx_pct": 15.61,
+        "avg_ticket": 6914
+      },
+      "화": {
+        "transactions": 317752,
+        "amount": 2172985609,
+        "tx_pct": 15.88,
+        "avg_ticket": 6839
+      },
+      "수": {
+        "transactions": 335123,
+        "amount": 2257558176,
+        "tx_pct": 16.75,
+        "avg_ticket": 6737
+      },
+      "목": {
+        "transactions": 340349,
+        "amount": 2345078411,
+        "tx_pct": 17.01,
+        "avg_ticket": 6890
+      },
+      "금": {
+        "transactions": 284030,
+        "amount": 2126324753,
+        "tx_pct": 14.2,
+        "avg_ticket": 7486
+      },
+      "토": {
+        "transactions": 185149,
+        "amount": 1500276767,
+        "tx_pct": 9.25,
+        "avg_ticket": 8103
+      },
+      "일": {
+        "transactions": 226120,
+        "amount": 1709835493,
+        "tx_pct": 11.3,
+        "avg_ticket": 7562
+      }
+    },
+    "age_tx_pct": {
+      "10대": 1.33,
+      "20대": 20.06,
+      "30대": 33.85,
+      "40대": 19.73,
+      "50대": 15.14,
+      "60대+": 9.89
+    },
+    "gender_tx_pct": {
+      "남": 59.5,
+      "여": 40.5
+    }
+  },
+  "industry_sales_rank_2025q4": [
+    {
+      "industry": "일반의류",
+      "sales_amount": 84453856133
+    },
+    {
+      "industry": "운동/경기용품",
+      "sales_amount": 18690969266
+    },
+    {
+      "industry": "한식음식점",
+      "sales_amount": 12183485765
+    },
+    {
+      "industry": "편의점",
+      "sales_amount": 5387933448
+    },
+    {
+      "industry": "핸드폰",
+      "sales_amount": 3709695253
+    },
+    {
+      "industry": "슈퍼마켓",
+      "sales_amount": 3592142784
+    },
+    {
+      "industry": "화장품",
+      "sales_amount": 3387837037
+    },
+    {
+      "industry": "양식음식점",
+      "sales_amount": 2645935752
+    },
+    {
+      "industry": "커피-음료",
+      "sales_amount": 2291665708
+    },
+    {
+      "industry": "의약품",
+      "sales_amount": 2122165563
+    }
+  ]
+}
